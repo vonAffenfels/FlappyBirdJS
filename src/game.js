@@ -1,13 +1,24 @@
 let Game = {
-	debug: 1,
-	states: {},
+	states: 	{},
+	objects: 	{},
 
-	width: 414,
-	height: 736,
+	config: {
+		width: 		1024,
+		height: 	768,
 
-	log: function() {
-		if (Game.debug) {
-			console.log.apply(console, arguments);
+		physics: {
+			gravity: 1300
+		},
+
+		trees: {
+			// Gap between trees in Y
+			gap: 		150,
+
+			// Speed of the trees (and ground)
+			speed: 		-200,
+
+			// Distance between trees in X
+			distance: 	300
 		}
 	}
 }

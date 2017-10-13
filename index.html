@@ -6,9 +6,15 @@
 	<script src="lib/phaser.min.js"></script>
 
 	<script src="src/game.js"></script>
+
 	<script src="src/states/boot.js"></script>
 	<script src="src/states/loading.js"></script>
 	<script src="src/states/menu.js"></script>
+
+	<script src="src/objects/ground.js"></script>
+	<script src="src/objects/tree.js"></script>
+	<script src="src/objects/tree_group.js"></script>
+
 	<style>
 		body {
 			margin: 0; 
@@ -22,10 +28,10 @@
 	<script type="text/javascript">
 	<!--
 		window.onload = function() {
-			var game = new Phaser.Game(Game.width, Game.height, Phaser.CANVAS, 'gameContainer');
-			game.state.add("boot", Game.states.boot);
-			game.state.add("loading", Game.states.loading);
-			game.state.add("menu", Game.states.menu);
+			var game = new Phaser.Game(Game.config.width, Game.config.height, Phaser.CANVAS, 'gameContainer');
+			game.state.add("boot", Game.states.Boot);
+			game.state.add("loading", Game.states.Loading);
+			game.state.add("menu", Game.states.Menu);
 			game.state.start("boot");
 		};
 	-->

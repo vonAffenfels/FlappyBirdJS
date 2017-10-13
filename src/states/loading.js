@@ -1,9 +1,9 @@
 if (!Game) Game = {};
 if (!Game.states) Game.states = {};
 
-Game.states.loading = function (game) {}
+Game.states.Loading = function (game) {}
 
-Game.states.loading.prototype = {
+Game.states.Loading.prototype = {
 	preload: function(){ 
         let loadingBar = this.add.sprite(this.world.centerX, this.world.centerY, "loading");
         loadingBar.anchor.setTo(0.5,0.5);
@@ -17,6 +17,9 @@ Game.states.loading.prototype = {
 		this.load.bitmapFont("fnt_flappy", 'assets/fnt_flappy.png', 'assets/fnt_flappy.fnt');
 	},
 	create: function () {
+		// set a blue color for the background of the stage
+		this.game.stage.backgroundColor = "#89bfdc";
+		
 		this.game.state.start("menu");
 	}
 }

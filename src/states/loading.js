@@ -19,7 +19,7 @@ Game.states.Loading.prototype = {
 	create: function () {
 		// set a blue color for the background of the stage
 		this.game.stage.backgroundColor = "#89bfdc";
-		
+
 		this.game.state.start("menu");
 	}
 }

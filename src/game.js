@@ -20,5 +20,10 @@ let Game = {
 			// Distance between trees in X
 			distance: 	300
 		}
+	},
+
+	save: {
+		selectedColor: 1,
+		highscore: 0
 	}
 }

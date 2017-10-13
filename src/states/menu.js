@@ -68,13 +68,13 @@ Game.states.Menu.prototype = {
 			let text = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 64 + curY + (menuHeight / 2) * i, "fnt_flappy", this.mainMenu[i].text, 64);
 			text.anchor.setTo(0.5);
 
-			this.mainMenu[i].posX = text.centerX - text.width / 2 - 16;
-			this.mainMenu[i].posY = this.game.world.centerY + 64 + curY + (menuHeight / 2) * i;
+			this.mainMenu[i].posX = Math.floor(text.centerX - text.width / 2 - 16);
+			this.mainMenu[i].posY = Math.floor(this.game.world.centerY + 64 + curY + (menuHeight / 2) * i);
 		}
 
 		// Selector bird
 		this.selector = this.game.add.sprite(this.mainMenu[this.selectedItem].posX, this.mainMenu[this.selectedItem].posY, "img_bird");
-		this.selector.animations.add("flap", [0, 1]);
+		this.selector.animations.add("flap", [Game.save.selectedColor * 2, Game.save.selectedColor * 2 + 1]);
 		this.selector.animations.play("flap", 8, true);
 		this.selector.anchor.set(1, 0.6);
 		this.selector.scale.setTo(1.2);

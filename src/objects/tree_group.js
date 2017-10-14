@@ -12,7 +12,7 @@ Game.objects.TreeGroup = function (game, gap, speed, distance) {
 
 	for (let i = 0; i < numTrees; i++) {
 		let tree = new Game.objects.Tree(this.game, this, i, gap, speed);
-		tree.restart(this.game.world.width + (i + 1) * this.distance);
+		tree.restart(this.game.world.width + i * this.distance);
 	}
 
 	this.firstTree = this.getAt(0);

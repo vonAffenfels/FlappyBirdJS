@@ -1,10 +1,13 @@
 let Game = {
 	states: 	{},
 	objects: 	{},
+	menus: 		{}, 
 
 	config: {
 		width: 		1024,
 		height: 	768,
+
+		availableColors: 10,
 
 		physics: {
 			gravity: 1300
@@ -23,7 +26,7 @@ let Game = {
 	},
 
 	save: {
-		selectedColor: 1,
+		selectedColor: 0,
 		highscore: 0
 	}
 }

@@ -1,25 +1,12 @@
 if (!Game) Game = {};
 if (!Game.states) Game.states = {};
 
+const MENU_MAIN 		= 0;
+const MENU_COLOR_SELECT = 1;
+
 Game.states.Menu = function (game) {
-	this.MENU_MAIN = 0;
-	this.MENU_COLOR_SELECT = 1;
-
-	this.mainMenu = [
-		{
-			text: "Start",
-			posX: 0,
-			posY: 0
-		},
-		{
-			text: "Farbwahl",
-			posX: 0,
-			posY: 0
-		}
-	];
-
-	this.currentMenu = this.MENU_MAIN;
-	this.selectedItem = 0;
+	this.menus = [];
+	this.menus[MENU_MAIN] = new Game.menus.MainMenu(game, this);
 }
 
 Game.states.Menu.prototype = {
@@ -30,65 +17,94 @@ Game.states.Menu.prototype = {
 		// Draw ground
 		this.ground = new Game.objects.Ground(this.game, Game.config.trees.speed);
 
-		// Draw a translucent background
-		let bg = this.game.add.graphics(0, 0);
-		bg.beginFill(0x000000, 0.3);
-		bg.drawRect(0, 0, this.game.world.width, this.game.world.height);
-		bg.endFill();
+		// Draw title
+		this.title = this.game.add.bitmapText(this.game.world.centerX, 128, "fnt_flappy", "Flappy Bird JS", 128);
+		this.title.anchor.setTo(0.5, 0.5);
 
-		let title = this.game.add.bitmapText(this.game.world.centerX, 128, "fnt_flappy", "Flappy Bird JS", 128);
-		title.anchor.setTo(0.5, 0.5);
-		
-		switch (this.currentMenu) {
-			case this.MENU_MAIN:
-				this._mainMenuDraw();
-				break;
+		for (let i = 0; i < this.menus.length; i++) {
+			this.menus[i].draw();
+			this.game.add.existing(this.menus[i]);
 		}
+
+		this.changeMenu(MENU_MAIN);
 	},
 
 	update: function () {
 		// Check if a tree is outside the drawing area (to the left)
 		this.trees.checkVisibilty();
 
-		switch (this.currentMenu) {
-			case this.MENU_MAIN:
-				this._mainMenuUpdate();
-				break;
-		}
+		// Handle input for menus
+		this.menus[this.curMenu].handle();
 	},
 
-	_mainMenuDraw: function() {
-		let itemSize = 64 + 16;
-		let menuHeight = this.mainMenu.length * itemSize - 16; // Remove last space
-		let curY = -(menuHeight / 2);
-		let selectorY = 0;
-		let selectorX = this.game.world.centerX;
+	_colorSelectMenuDraw: function () {
+		this.menuGroups[this.MENU_COLOR_SELECT] = this.game.add.group();
+		this.menuGroups[this.MENU_COLOR_SELECT].visible = false;
+		this.menuGroups[this.MENU_COLOR_SELECT].positions = [];
 
-		for (let i = 0; i < this.mainMenu.length; i++) {
-			let text = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 64 + curY + (menuHeight / 2) * i, "fnt_flappy", this.mainMenu[i].text, 64);
-			text.anchor.setTo(0.5);
+		let numColors = Game.config.availableColors;
 
-			this.mainMenu[i].posX = Math.floor(text.centerX - text.width / 2 - 16);
-			this.mainMenu[i].posY = Math.floor(this.game.world.centerY + 64 + curY + (menuHeight / 2) * i);
+		let itemSize = 36 + 36; // Image width + spacer
+		let menuWidth = numColors * itemSize - 36;
+		let curX = -(menuWidth / 2);
+
+		for (let i = 0; i < numColors; i++) {
+			let posX = Math.floor(this.game.world.centerX + curX + itemSize * i);
+
+			let bird = this.game.add.sprite(posX, this.game.world.centerY, "img_bird", i * 2, this.menuGroups[this.MENU_COLOR_SELECT]);
+			bird.anchor.set(0.5);
+			bird.animations.add("flap", [i * 2, i * 2 + 1]);
+			bird.animations.play("flap", 8, true);
+
+			this.menuGroups[this.MENU_COLOR_SELECT].positions[i] = {
+				x: posX,
+				y: this.game.world.centerY + 36 + 18
+			};
 		}
 
-		// Selector bird
-		this.selector = this.game.add.sprite(this.mainMenu[this.selectedItem].posX, this.mainMenu[this.selectedItem].posY, "img_bird");
-		this.selector.animations.add("flap", [Game.save.selectedColor * 2, Game.save.selectedColor * 2 + 1]);
-		this.selector.animations.play("flap", 8, true);
-		this.selector.anchor.set(1, 0.6);
-		this.selector.scale.setTo(1.2);
+		// Selector char
+		let selectorPos = this.menuGroups[this.MENU_COLOR_SELECT].positions[this.selectedItem]
+		let selector = this.game.add.bitmapText(selectorPos.x, selectorPos.y, "fnt_flappy", "^", 36 + 18, this.menuGroups[this.MENU_COLOR_SELECT]);
+		selector.name = "selector";
+		selector.anchor.setTo(0.5);
 	},
 
-	_mainMenuUpdate: function () {
+	_colorSelectMenuUpdate: function () {
+		if (!this.menuGroups[this.MENU_COLOR_SELECT].visible) {
+			return;
+		}
+
 		let cursors = this.game.input.keyboard.createCursorKeys();
-		if (cursors.down.justPressed()) {
-			this.selectedItem = Math.min(this.mainMenu.length - 1, this.selectedItem + 1);
-		} else if (cursors.up.justPressed()) {
+		let keySpace = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+		let keyEnter = this.game.input.keyboard.addKey(Phaser.KeyCode.ENTER);
+
+		if (cursors.right.justPressed()) {
+			this.selectedItem = Math.min(Game.config.availableColors - 1, this.selectedItem + 1);
+		} else if (cursors.left.justPressed()) {
 			this.selectedItem = Math.max(0, this.selectedItem - 1);
+		} else if (keySpace.justPressed() || keyEnter.justPressed()) {
+			Game.save.selectedColor = this.selectedItem;
+
+			// Update main menu selector
+			let selectorBird = this.menuGroups[this.MENU_MAIN].getByName("selector");
+			selectorBird.animations.add("flap", [Game.save.selectedColor * 2, Game.save.selectedColor * 2 + 1]);
+			selectorBird.animations.play("flap", 8, true);
+
+			this._selectMenu(this.MENU_MAIN);
 		}
 
-		this.selector.x = this.mainMenu[this.selectedItem].posX;
-		this.selector.y = this.mainMenu[this.selectedItem].posY;
-	}
+		let selectorPos = this.menuGroups[this.MENU_COLOR_SELECT].positions[this.selectedItem]
+		let selector = this.menuGroups[this.MENU_COLOR_SELECT].getByName("selector");
+		selector.x = selectorPos.x;
+		selector.y = selectorPos.y;
+	},
+
+	changeMenu: function (id) {
+		for (let i = 0; i < this.menus.length; i++) {
+			this.menus[i].visible = false;
+		}
+
+		this.menus[id].visible = true;
+		this.curMenu = id;
+	},
 }

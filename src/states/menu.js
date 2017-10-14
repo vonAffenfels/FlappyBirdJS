@@ -12,9 +12,11 @@ Game.states.Menu.prototype = {
 	create: function () {
 		// Draw trees
 		this.trees = new Game.objects.TreeGroup(this.game, Game.config.trees.gap, Game.config.trees.speed, Game.config.trees.distance);
+		this.trees.start();
 
 		// Draw ground
 		this.ground = new Game.objects.Ground(this.game, Game.config.trees.speed);
+		this.ground.start();
 
 		// Draw title
 		this.title = this.game.add.bitmapText(this.game.world.centerX, 128, "fnt_flappy", "Flappy Bird JS", 128);

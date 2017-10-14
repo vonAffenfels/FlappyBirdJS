@@ -25,6 +25,7 @@ Game.objects.Tree = function (game, parent, index, gap, speed) {
 
 	this.topMin = 110 - this.topTree.height;
 	this.topMax = this.game.world.height - this.topTree.height - this.gap - 210;
+	this.running = false;
 }
 
 Game.objects.Tree.prototype = Object.create(Phaser.Group.prototype);
@@ -38,9 +39,21 @@ Game.objects.Tree.prototype.restart = function (x) {
 	this.x = x;
 	this.y = this.game.rnd.integerInRange(this.topMin, this.topMax);
 
-	this.setAll("body.velocity.x", this.speed);
+	if (this.running) {
+		this.setAll("body.velocity.x", this.speed);
+	}
 }
 
 Game.objects.Tree.prototype.getWorldX = function () {
 	return this.topTree.world.x;
+}
+
+Game.objects.Tree.prototype.start = function () {
+	this.setAll("body.velocity.x", this.speed);
+	this.running = true;
+}
+
+Game.objects.Tree.prototype.stop = function () {
+	this.setAll("body.velocity.x", 0);
+	this.running = false;
 }

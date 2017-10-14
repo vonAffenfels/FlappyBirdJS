@@ -41,9 +41,10 @@ Game.menus.ColorSelectMenu.prototype.draw = function () {
 
 	for (let i = 0; i < this.items.length; i++) {
 		let posX = Math.floor(baseY + (this.imgWidth + space) * i);
+		let shouldHighlight = (i == this.curSel && !Phaser.Device.touch);
 
 		this.items[i].obj = this.game.add.sprite(posX, this.game.world.centerY, "img_bird", i * 2, this);
-		this.items[i].obj.scale.setTo(this.curSel == i ? this.sclHighlight : this.scl);
+		this.items[i].obj.scale.setTo(shouldHighlight ? this.sclHighlight : this.scl);
 		this.items[i].obj.anchor.set(0.5);
 		this.items[i].obj.animations.add("anim", [this.items[i].frame, this.items[i].frame + 1]);
 		this.items[i].obj.animations.play("anim", 8, true);
@@ -61,6 +62,7 @@ Game.menus.ColorSelectMenu.prototype.draw = function () {
 	let y = Math.floor(this.items[this.curSel].obj.centerY + this.items[this.curSel].obj.height + this.selectorSpace);
 	this.selector = this.game.add.bitmapText(this.items[this.curSel].x, y, "fnt_flappy", "^", 36 + 18, this);
 	this.selector.anchor.setTo(0.5);
+	this.selector.visible = !Phaser.Device.touch;
 }
 
 // Handle updates
@@ -90,9 +92,11 @@ Game.menus.ColorSelectMenu.prototype._setSelected = function (index) {
 	this.curSel = index;
 
 	if (oldSel != this.curSel) {
+		let shouldHighlight = !Phaser.Device.touch;
+
 		// Update scale
 		this.items[oldSel].obj.scale.setTo(this.scl);
-		this.items[this.curSel].obj.scale.setTo(this.sclHighlight);
+		this.items[this.curSel].obj.scale.setTo(shouldHighlight ? this.sclHighlight : this.scl);
 	
 		let y = Math.floor(this.items[this.curSel].obj.centerY + this.items[this.curSel].obj.height + this.selectorSpace);
 		this.selector.y = y;

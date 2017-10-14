@@ -8,11 +8,12 @@ Game.states.Play = function (game) {
 
 Game.states.Play.prototype = {
 	create: function () {
-		
 		this.countdownPosition = 3;
 		this.started = false;
 		this.gameover = false;
 		this.score = 0;
+
+		this.input.onTap.add(this._onTap, this);
 
 		// Draw trees
 		this.trees = new Game.objects.TreeGroup(this.game, Game.config.trees.gap, Game.config.trees.speed, Game.config.trees.distance);
@@ -29,10 +30,15 @@ Game.states.Play.prototype = {
 		this.scoreBoard.visible = false;
 
 		// Draw Gameover Screen
+		let gameoverText = "Press Space to continue";
+		if (Phaser.Device.touch) {
+			gameoverText = "Tap to continue";
+		}
+
 		this.gameoverHeadline = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY - 50, "fnt_flappy", "Game Over", 160);
 		this.gameoverHeadline.anchor.setTo(0.5);
 		this.gameoverHeadline.visible = false;
-		this.gameoverSubline = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 70, "fnt_flappy", "Press Space or Tap to continue", 64);
+		this.gameoverSubline = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 70, "fnt_flappy", gameoverText, 64);
 		this.gameoverSubline.anchor.setTo(0.5);
 		this.gameoverSubline.visible = false;
 
@@ -101,6 +107,17 @@ Game.states.Play.prototype = {
 		}
 
 		this.gameover = true;
+	},
+
+	_onTap: function () {
+		if (this.started) {
+			this.bird.flap();
+		}
+
+		if (this.gameover) {
+			// Exit to Mainmenu
+			this.game.state.start("menu");
+		}
 	},
 
 	update: function () {

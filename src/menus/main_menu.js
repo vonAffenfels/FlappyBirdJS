@@ -48,7 +48,9 @@ Game.menus.MainMenu.prototype.draw = function () {
 	for (let i = 0; i < this.items.length; i++) {
 		let posY = Math.floor(baseY + (this.fontSize + space) * i);
 
-		this.items[i].obj = this.game.add.bitmapText(this.game.world.centerX, posY, "fnt_flappy", this.items[i].text, i == this.curSel ? this.fontSizeHighlight : this.fontSize, this);
+		// Only highlight if current item and no touch available
+		let shouldHighlight = (i == this.curSel && !Phaser.Device.touch);
+		this.items[i].obj = this.game.add.bitmapText(this.game.world.centerX, posY, "fnt_flappy", this.items[i].text, shouldHighlight ? this.fontSizeHighlight : this.fontSize, this);
 		this.items[i].obj.anchor.setTo(0.5, 0);
 		this.items[i].obj.inputEnabled = true;
 		this.items[i].obj.events.onInputOver.add(function () {
@@ -66,6 +68,15 @@ Game.menus.MainMenu.prototype.draw = function () {
 	this.selector.animations.add("flap", [this.curColor * 2, this.curColor * 2 + 1]);
 	this.selector.animations.play("flap", 8, true);
 	this.selector.anchor.setTo(1, -0.5);
+	this.selector.visible = !Phaser.Device.touch;
+
+	if (Phaser.Device.touch) {
+		// Show selected color beneath menu
+		this.selectedColor = this.game.add.sprite(this.game.world.centerX, this.game.world.height - 200, "img_bird", 1, this);
+		this.selectedColor.animations.add("flap", [this.curColor * 2, this.curColor * 2 + 1]);
+		this.selectedColor.animations.play("flap", 8, true);
+		this.selectedColor.anchor.set(0.5);
+	}
 }
 
 // Handle updates
@@ -79,6 +90,11 @@ Game.menus.MainMenu.prototype.handle = function () {
 		this.curColor = Game.save.selectedColor;
 		this.selector.animations.add("flap", [this.curColor * 2, this.curColor * 2 + 1]);
 		this.selector.animations.play("flap", 8, true);
+
+		if (this.selectedColor) {
+			this.selectedColor.animations.add("flap", [this.curColor * 2, this.curColor * 2 + 1]);
+			this.selectedColor.animations.play("flap", 8, true);			
+		}
 	}
 
 	if (cursors.down.justPressed()) {
@@ -96,9 +112,11 @@ Game.menus.MainMenu.prototype._setSelected = function (index) {
 	this.curSel = index;
 
 	if (oldSel != this.curSel) {
+		let shouldHighlight = !Phaser.Device.touch;
+
 		// Update fontsize
 		this.items[oldSel].obj.fontSize = this.fontSize
-		this.items[this.curSel].obj.fontSize = this.fontSizeHighlight
+		this.items[this.curSel].obj.fontSize = shouldHighlight ? this.fontSizeHighlight : this.fontSize;
 	
 		let x = Math.floor(this.items[this.curSel].obj.centerX - this.items[this.curSel].obj.width / 2 - this.selectorSpace);
 		this.selector.x = x;

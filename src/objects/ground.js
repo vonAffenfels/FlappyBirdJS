@@ -5,6 +5,7 @@ Game.objects.Ground = function (game, speed) {
 	Phaser.TileSprite.call(this, game, 0, game.height - 100, game.width, 100, "img_ground");
 
 	this.speed = speed;
+	
 	this.game.add.existing(this);
 }
 

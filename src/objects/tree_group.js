@@ -17,6 +17,7 @@ Game.objects.TreeGroup = function (game, gap, speed, distance) {
 
 	this.firstTree = this.getAt(0);
 	this.lastTree = this.getAt(this.length - 1);
+	this.currentTree = this.firstTree;
 }
 
 Game.objects.TreeGroup.prototype = Object.create(Phaser.Group.prototype);
@@ -46,4 +47,12 @@ Game.objects.TreeGroup.prototype.stop = function () {
 	for (let i = 0; i < this.numTrees; i++) {
 		this.getAt(i).stop();
 	}
+}
+
+Game.objects.TreeGroup.prototype.isColliding = function (bird) {
+	return this.game.physics.arcade.collide(bird, this.currentTree);
+}
+
+Game.objects.TreeGroup.prototype.activateNextTree = function () {
+	this.currentTree = this._getNextTree(this.currentTree.index);
 }

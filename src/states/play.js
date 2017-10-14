@@ -10,6 +10,7 @@ Game.states.Play.prototype = {
 	create: function () {
 		this.countdownPosition = 3;
 		this.started = false;
+		this.gameover = false;
 
 		// Draw trees
 		this.trees = new Game.objects.TreeGroup(this.game, Game.config.trees.gap, Game.config.trees.speed, Game.config.trees.distance);
@@ -49,6 +50,18 @@ Game.states.Play.prototype = {
 		}
 	},
 
+	_gameover: function () {
+		console.log("GAME OVER");
+
+		this.gameover = true;
+		this.started = false;
+
+		// Stop moving objects
+		this.trees.stop();
+		this.ground.stop();
+		this.bird.stop();
+	},
+
 	update: function () {
 		let keySpace = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
@@ -58,6 +71,17 @@ Game.states.Play.prototype = {
 		if (this.started) {
 			if (keySpace.justPressed()) {
 				this.bird.flap();
+			}
+
+			// Check for vertical boundaries
+			if (this.bird.y + this.bird.height > this.game.world.height - this.ground.height || this.bird.y < -this.bird.height) {
+				return this._gameover();
+			}
+
+			// Check for collisions
+			if (this.trees.isColliding(this.bird)) {
+				// Collision detected
+				return this._gameover();
 			}
 		}
 	}

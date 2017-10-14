@@ -7,13 +7,8 @@ Game.states.Play = function (game) {
 }
 
 Game.states.Play.prototype = {
-	_interpolation: function (v, k) {
-		console.log(v, k);
-		return k;
-	},
-
 	create: function () {
-		Game.states.Play.self = this;
+		
 		this.countdownPosition = 3;
 		this.started = false;
 		this.gameover = false;

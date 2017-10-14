@@ -7,7 +7,8 @@ let Game = {
 		width: 		1024,
 		height: 	768,
 
-		availableColors: 10,
+		availableColors: 	10,
+		scoreGain:  		10,
 
 		physics: {
 			gravity: 1300,

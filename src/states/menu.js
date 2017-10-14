@@ -20,7 +20,11 @@ Game.states.Menu.prototype = {
 
 		// Draw title
 		this.title = this.game.add.bitmapText(this.game.world.centerX, 128, "fnt_flappy", "Flappy Bird JS", 128);
-		this.title.anchor.setTo(0.5, 0.5);
+		this.title.anchor.setTo(0.5);
+
+		// Draw Highscore
+		this.highscore = this.game.add.bitmapText(this.game.world.centerX, 250, "fnt_flappy", "Highscore: " + Game.save.highscore, 48);
+		this.highscore.anchor.setTo(0.5);
 
 		// Load main menu
 		this.menus[MENU_MAIN] = new Game.menus.MainMenu(this.game, this);

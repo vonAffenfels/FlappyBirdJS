@@ -56,3 +56,7 @@ Game.objects.TreeGroup.prototype.isColliding = function (bird) {
 Game.objects.TreeGroup.prototype.activateNextTree = function () {
 	this.currentTree = this._getNextTree(this.currentTree.index);
 }
+
+Game.objects.TreeGroup.prototype.hasPassed = function (bird) {
+	return bird.x > this.currentTree.getGapX();
+}

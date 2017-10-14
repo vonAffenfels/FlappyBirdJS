@@ -57,3 +57,7 @@ Game.objects.Tree.prototype.stop = function () {
 	this.setAll("body.velocity.x", 0);
 	this.running = false;
 }
+
+Game.objects.Tree.prototype.getGapX = function () {
+	return this.bottomTree.world.x + this.bottomTree.width;
+}

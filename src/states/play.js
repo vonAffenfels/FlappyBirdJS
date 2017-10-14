@@ -7,7 +7,13 @@ Game.states.Play = function (game) {
 }
 
 Game.states.Play.prototype = {
+	_interpolation: function (v, k) {
+		console.log(v, k);
+		return k;
+	},
+
 	create: function () {
+		Game.states.Play.self = this;
 		this.countdownPosition = 3;
 		this.started = false;
 		this.gameover = false;
@@ -34,14 +40,6 @@ Game.states.Play.prototype = {
 		this.gameoverSubline = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 70, "fnt_flappy", "Press Space or Tap to continue", 64);
 		this.gameoverSubline.anchor.setTo(0.5);
 		this.gameoverSubline.visible = false;
-
-		// Gameover Tween
-		this.gameoverTweenDown = this.game.add.tween(this.bird);
-		this.gameoverTweenDown.to({x: "+50", y: this.game.world.height + this.bird.height}, 600, Phaser.Easing.Linear.None);
-		this.gameoverTweenDown.onComplete.add(this._gameoverComplete, this);
-		this.gameoverTweenUp = this.game.add.tween(this.bird);
-		this.gameoverTweenUp.to({x: "+30", y: "-100"}, 500, Phaser.Easing.Exponential.Out);
-		this.gameoverTweenUp.chain(this.gameoverTweenDown);
 
 		// New Highscore Message
 		this.highscoreMessage = this.game.add.bitmapText(this.game.world.centerX, 200, "fnt_flappy", "Neuer Highscore!", 64);
@@ -88,7 +86,12 @@ Game.states.Play.prototype = {
 		this.ground.stop();
 		this.bird.stop();
 
-		this.gameoverTweenUp.start();
+		// Gameover Tween
+		this.gameoverTween = this.game.add.tween(this.bird);
+		this.gameoverTween.to({y: [this.bird.y - 100, this.game.world.height + this.bird.height]}, 1000, Phaser.Easing.Linear.None);
+		this.gameoverTween.interpolation(Phaser.Math.catmullRomInterpolation);
+		this.gameoverTween.onComplete.add(this._gameoverComplete, this);
+		this.gameoverTween.start();
 	},
 
 	_gameoverComplete: function () {

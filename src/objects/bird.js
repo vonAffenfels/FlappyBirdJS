@@ -7,8 +7,9 @@ Game.objects.Bird = function (game, x, y) {
 	this.game.physics.arcade.enableBody(this);
 	this.body.moves = false;
 	this.body.immovable = true;
+	this.baseFrame = Game.save.selectedColor * 2;
 
-	this.animations.add("flap", [Game.save.selectedColor * 2, Game.save.selectedColor * 2 + 1])
+	this.animations.add("flap", [this.baseFrame, this.baseFrame + 1]);
 	this.frame = Game.save.selectedColor * 2;
 
 	this.game.add.existing(this);
@@ -25,6 +26,7 @@ Game.objects.Bird.prototype.start = function () {
 
 Game.objects.Bird.prototype.stop = function () {
 	this.animations.stop("flap", true);
+	this.frame = this.baseFrame;
 	this.body.moves = false;
 	this.body.immovable = true;
 }

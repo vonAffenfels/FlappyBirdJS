@@ -26,7 +26,33 @@ let Game = {
 	},
 
 	save: {
+		version: 0x000001,
 		selectedColor: 0,
 		highscore: 0
 	}
+}
+
+Game.saveState = function () {
+	localStorage.setItem("FlappyBirdJS", JSON.stringify(Game.save));
+}
+
+Game.loadState = function () {
+	let saveState = localStorage.getItem("FlappyBirdJS");
+	if (!saveState) {
+		Game.saveState();
+		return;
+	}
+	
+	let saveObj = JSON.parse(saveState);
+	if (!saveObj) {
+		Game.saveState();
+		return;
+	}
+
+	if (!saveObj.version || saveObj.version != Game.save.version) {
+		Game.saveState();
+		return;
+	}
+
+	Game.save = saveObj;
 }

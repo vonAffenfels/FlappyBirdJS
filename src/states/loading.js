@@ -15,6 +15,9 @@ Game.states.Loading.prototype = {
 		this.game.load.image("img_ground", "assets/img_ground.png");
 
 		this.load.bitmapFont("fnt_flappy", 'assets/fnt_flappy.png', 'assets/fnt_flappy.fnt');
+
+		// Load game states
+		Game.loadState();
 	},
 	create: function () {
 		// set a blue color for the background of the stage

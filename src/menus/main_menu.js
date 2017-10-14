@@ -13,7 +13,7 @@ Game.menus.MainMenu = function (game, state) {
 		{
 			text: "Start",
 			action: function () {
-				console.log("START");
+				this.game.state.start("play");
 			}
 		}
 	];

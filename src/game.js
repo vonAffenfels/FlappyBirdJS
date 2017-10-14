@@ -10,7 +10,8 @@ let Game = {
 		availableColors: 10,
 
 		physics: {
-			gravity: 1300
+			gravity: 1300,
+			flapForce: -400
 		},
 
 		trees: {

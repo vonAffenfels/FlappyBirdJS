@@ -10,10 +10,12 @@
 	<script src="src/states/boot.js"></script>
 	<script src="src/states/loading.js"></script>
 	<script src="src/states/menu.js"></script>
+	<script src="src/states/play.js"></script>
 
 	<script src="src/objects/ground.js"></script>
 	<script src="src/objects/tree.js"></script>
 	<script src="src/objects/tree_group.js"></script>
+	<script src="src/objects/bird.js"></script>
 
 	<script src="src/menus/main_menu.js"></script>
 	<script src="src/menus/color_select_menu.js"></script>
@@ -35,6 +37,7 @@
 			game.state.add("boot", Game.states.Boot);
 			game.state.add("loading", Game.states.Loading);
 			game.state.add("menu", Game.states.Menu);
+			game.state.add("play", Game.states.Play);
 			game.state.start("boot");
 		};
 	-->

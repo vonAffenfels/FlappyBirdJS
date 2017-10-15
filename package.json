@@ -3,6 +3,7 @@
 	"author": "Saij",
 	"title": "Flappy Bird JS",
 	"version": "1.0.0",
+	"main": "index.html",
 	"description": "A Flappy Bird clone written in JavaScript ES5 with Phaser Game Framework",
 	"contributors": [
 		{

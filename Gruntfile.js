@@ -28,6 +28,11 @@ module.exports = function (grunt) {
                     {expand: true, cwd: 'assets/sounds', dest: '_build/dist/assets/sounds', src: ['**/*', '!**/*.wav']},
                     {expand: true, cwd: 'assets/fonts', dest: '_build/dist/assets/fonts', src: ['**/*']}
                 ]
+            },
+            nwjs: {
+                files: [
+                    {expand: true, src: ["package.json"], dest: '_build/dist'}
+                ]
             }
         },
 
@@ -89,7 +94,8 @@ module.exports = function (grunt) {
 
         clean: {
             dist: ['_build/dist/*'],
-            temp: ['_build/dist/*.js', '!_build/dist/*.min.js']
+            temp: ['_build/dist/*.js', '!_build/dist/*.min.js'],
+            nwjs: ['_build/nwjs/*']
         },
 
         htmlbuild: {
@@ -124,6 +130,16 @@ module.exports = function (grunt) {
                 base: "_build/dist"
             },
             src: ['**']
+        },
+
+        nwjs: {
+            options: {
+                platforms: ['win'],
+                buildDir: '_build/nwjs',
+                flavor: 'normal',
+                zip: true
+            },
+            src: ['_build/dist/**/*']
         }
     });
 
@@ -147,6 +163,13 @@ module.exports = function (grunt) {
     grunt.registerTask('deploy-gh', [
         'dist',
         'gh-pages'
+    ]);
+
+    grunt.registerTask('deploy-nwjs', [
+        'clean:nwjs',
+        'dist',
+        'copy:nwjs',
+        'nwjs'
     ]);
 
     grunt.loadNpmTasks('grunt-contrib-clean');

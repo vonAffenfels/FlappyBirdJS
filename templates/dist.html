@@ -14,10 +14,10 @@
     <script type="text/javascript">
         window.onload = function() {
             var game = new Phaser.Game(Game.config.width, Game.config.height, Phaser.CANVAS, 'gameContainer');
-            game.state.add("boot", Game.states.Boot);
-            game.state.add("loading", Game.states.Loading);
-            game.state.add("menu", Game.states.Menu);
-            game.state.add("play", Game.states.Play);
+            game.state.add("boot", Game.States.Boot);
+            game.state.add("loading", Game.States.Loading);
+            game.state.add("menu", Game.States.Menu);
+            game.state.add("play", Game.States.Play);
             game.state.start("boot");
         };
     </script>

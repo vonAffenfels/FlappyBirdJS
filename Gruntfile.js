@@ -117,10 +117,16 @@ module.exports = function (grunt) {
                     }
                 }                
             }
+        },
+
+        "gh-pages": {
+            options: {
+                base: "_build/dist"
+            },
+            src: ['**']
         }
     });
 
-    //production build, we deploy this
     grunt.registerTask('dist', [
         'clean:dist',
         'copy:dist',
@@ -130,13 +136,17 @@ module.exports = function (grunt) {
         'htmlbuild:dist'
     ]);
 
-    //Development build, used for testing. Starts filewatcher and webserver
     grunt.registerTask('dev', [
         'copy:dev',
         'concat:dev',
         'htmlbuild:dev',
         'connect:server',
         'watch'
+    ]);
+
+    grunt.registerTask('deploy-gh', [
+        'dist',
+        'gh-pages'
     ]);
 
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -146,4 +156,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-html-build');
+    grunt.loadNpmTasks('grunt-gh-pages');
 };

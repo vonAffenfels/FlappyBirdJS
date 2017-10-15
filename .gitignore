@@ -4,3 +4,4 @@ _build
 atlassian-ide-plugin.xml
 node_modules
 *.tmp.*
+.grunt

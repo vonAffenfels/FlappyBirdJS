@@ -1,4 +1,4 @@
-Game.objects.Bird = function (game, x, y) {
+Game.Objects.Bird = function (game, x, y) {
 	Phaser.Sprite.call(this, game, x, y, "img_bird");
 
 	this.game.physics.arcade.enableBody(this);
@@ -12,22 +12,22 @@ Game.objects.Bird = function (game, x, y) {
 	this.game.add.existing(this);
 }
 
-Game.objects.Bird.prototype = Object.create(Phaser.Sprite.prototype);
-Game.objects.Bird.prototype.constructor = Game.objects.Bird;
+Game.Objects.Bird.prototype = Object.create(Phaser.Sprite.prototype);
+Game.Objects.Bird.prototype.constructor = Game.Objects.Bird;
 
-Game.objects.Bird.prototype.start = function () {
+Game.Objects.Bird.prototype.start = function () {
 	this.animations.play("flap", 8, true);
 	this.body.moves = true;
 	this.body.immovable = false;
 }
 
-Game.objects.Bird.prototype.stop = function () {
+Game.Objects.Bird.prototype.stop = function () {
 	this.animations.stop("flap", true);
 	this.frame = this.baseFrame;
 	this.body.moves = false;
 	this.body.immovable = true;
 }
 
-Game.objects.Bird.prototype.flap = function() {
+Game.Objects.Bird.prototype.flap = function() {
 	this.body.velocity.y = Game.config.physics.flapForce;
 }

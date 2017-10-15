@@ -1,4 +1,4 @@
-Game.objects.Tree = function (game, parent, index, gap, speed) {
+Game.Objects.Tree = function (game, parent, index, gap, speed) {
 	Phaser.Group.call(this, game, parent);
 
 	this.index = index;
@@ -25,10 +25,10 @@ Game.objects.Tree = function (game, parent, index, gap, speed) {
 	this.running = false;
 }
 
-Game.objects.Tree.prototype = Object.create(Phaser.Group.prototype);
-Game.objects.Tree.prototype.constructor = Game.objects.Tree;
+Game.Objects.Tree.prototype = Object.create(Phaser.Group.prototype);
+Game.Objects.Tree.prototype.constructor = Game.Objects.Tree;
 
-Game.objects.Tree.prototype.restart = function (x) {
+Game.Objects.Tree.prototype.restart = function (x) {
 	this.topTree.reset(0, 0);
 
 	this.bottomTree.reset(0, this.topTree.height + this.gap);
@@ -41,20 +41,20 @@ Game.objects.Tree.prototype.restart = function (x) {
 	}
 }
 
-Game.objects.Tree.prototype.getWorldX = function () {
+Game.Objects.Tree.prototype.getWorldX = function () {
 	return this.topTree.world.x;
 }
 
-Game.objects.Tree.prototype.start = function () {
+Game.Objects.Tree.prototype.start = function () {
 	this.setAll("body.velocity.x", this.speed);
 	this.running = true;
 }
 
-Game.objects.Tree.prototype.stop = function () {
+Game.Objects.Tree.prototype.stop = function () {
 	this.setAll("body.velocity.x", 0);
 	this.running = false;
 }
 
-Game.objects.Tree.prototype.getGapX = function () {
+Game.Objects.Tree.prototype.getGapX = function () {
 	return this.bottomTree.world.x + this.bottomTree.width;
 }

@@ -1,4 +1,4 @@
-Game.menus.MainMenu = function (game, state) {
+Game.Menus.MainMenu = function (game, state) {
 	Phaser.Group.call(this, game);
 
 	this.state = state;
@@ -19,7 +19,7 @@ Game.menus.MainMenu = function (game, state) {
 		this.items.push({
 			text: "Farbwahl",
 			action: function () {
-				this.state.changeMenu(MENU_COLOR_SELECT);
+				this.state.changeMenu(Game.States.Menu.MENU_COLOR_SELECT);
 			}
 		});
 	}
@@ -29,11 +29,11 @@ Game.menus.MainMenu = function (game, state) {
 	this.selectorSpace = 16;
 }
 
-Game.menus.MainMenu.prototype = Object.create(Phaser.Group.prototype);
-Game.menus.MainMenu.prototype.constructor = Game.menus.MainMenu;
+Game.Menus.MainMenu.prototype = Object.create(Phaser.Group.prototype);
+Game.Menus.MainMenu.prototype.constructor = Game.Menus.MainMenu;
 
 // Draw the menu
-Game.menus.MainMenu.prototype.draw = function () {
+Game.Menus.MainMenu.prototype.draw = function () {
 	let space = 16;
 
 	// Calculate height of whole menu
@@ -77,7 +77,7 @@ Game.menus.MainMenu.prototype.draw = function () {
 }
 
 // Handle updates
-Game.menus.MainMenu.prototype.handle = function () {
+Game.Menus.MainMenu.prototype.handle = function () {
 	let oldSel = this.curSel;
 	let cursors = this.game.input.keyboard.createCursorKeys();
 	let keySpace = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
@@ -104,7 +104,7 @@ Game.menus.MainMenu.prototype.handle = function () {
 }
 
 // Set new selected menuitem
-Game.menus.MainMenu.prototype._setSelected = function (index) {
+Game.Menus.MainMenu.prototype._setSelected = function (index) {
 	let oldSel = this.curSel;
 	this.curSel = index;
 

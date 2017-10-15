@@ -1,7 +1,7 @@
 let Game = {
-	states: 	{},
-	objects: 	{},
-	menus: 		{}, 
+	States: 	{},
+	Objects: 	{},
+	Menus: 		{}, 
 
 	config: {
 		width: 		1024,

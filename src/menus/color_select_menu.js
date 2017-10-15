@@ -1,4 +1,4 @@
-Game.menus.ColorSelectMenu = function (game, state) {
+Game.Menus.ColorSelectMenu = function (game, state) {
 	Phaser.Group.call(this, game);
 
 	this.state = state;
@@ -10,10 +10,7 @@ Game.menus.ColorSelectMenu = function (game, state) {
 	for (let i = 0; i < Game.config.availableColors; i++) {
 		this.items.push({
 			sprite: "img_bird",
-			frame: i * 2,
-			action: function () {
-				console.log("SELECTED COLOR " + i);
-			}
+			frame: i * 2
 		});
 	}
 
@@ -23,11 +20,11 @@ Game.menus.ColorSelectMenu = function (game, state) {
 	this.selectorSpace = 16;
 }
 
-Game.menus.ColorSelectMenu.prototype = Object.create(Phaser.Group.prototype);
-Game.menus.ColorSelectMenu.prototype.constructor = Game.menus.ColorSelectMenu;
+Game.Menus.ColorSelectMenu.prototype = Object.create(Phaser.Group.prototype);
+Game.Menus.ColorSelectMenu.prototype.constructor = Game.Menus.ColorSelectMenu;
 
 // Draw the menu
-Game.menus.ColorSelectMenu.prototype.draw = function () {
+Game.Menus.ColorSelectMenu.prototype.draw = function () {
 	let space = 36;
 
 	// Calculate width of whole menu
@@ -63,7 +60,7 @@ Game.menus.ColorSelectMenu.prototype.draw = function () {
 }
 
 // Handle updates
-Game.menus.ColorSelectMenu.prototype.handle = function () {
+Game.Menus.ColorSelectMenu.prototype.handle = function () {
 	let oldSel = this.curSel;
 	let cursors = this.game.input.keyboard.createCursorKeys();
 	let keySpace = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
@@ -77,14 +74,14 @@ Game.menus.ColorSelectMenu.prototype.handle = function () {
 	}
 }
 
-Game.menus.ColorSelectMenu.prototype._setColor = function (color) {
+Game.Menus.ColorSelectMenu.prototype._setColor = function (color) {
 	Game.save.selectedColor = color;
 	Game.saveState();
-	this.state.changeMenu(MENU_MAIN);
+	this.state.changeMenu(Game.States.Menu.MENU_MAIN);
 }
 
 // Set new selected menuitem
-Game.menus.ColorSelectMenu.prototype._setSelected = function (index) {
+Game.Menus.ColorSelectMenu.prototype._setSelected = function (index) {
 	let oldSel = this.curSel;
 	this.curSel = index;
 

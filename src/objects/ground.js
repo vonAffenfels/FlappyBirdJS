@@ -1,4 +1,4 @@
-Game.objects.Ground = function (game, speed) {
+Game.Objects.Ground = function (game, speed) {
 	Phaser.TileSprite.call(this, game, 0, game.height - 100, game.width, 100, "img_ground");
 
 	this.speed = speed;
@@ -6,13 +6,13 @@ Game.objects.Ground = function (game, speed) {
 	this.game.add.existing(this);
 }
 
-Game.objects.Ground.prototype = Object.create(Phaser.TileSprite.prototype);
-Game.objects.Ground.prototype.constructor = Game.objects.Ground;
+Game.Objects.Ground.prototype = Object.create(Phaser.TileSprite.prototype);
+Game.Objects.Ground.prototype.constructor = Game.Objects.Ground;
 
-Game.objects.Ground.prototype.start = function () {
+Game.Objects.Ground.prototype.start = function () {
 	this.autoScroll(this.speed, 0);
 }
 
-Game.objects.Ground.prototype.stop = function () {
+Game.Objects.Ground.prototype.stop = function () {
 	this.autoScroll(0, 0);
 }

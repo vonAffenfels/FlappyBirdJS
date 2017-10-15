@@ -1,6 +1,3 @@
-if (!Game) Game = {};
-if (!Game.states) Game.states = {};
-
 Game.states.Play = function (game) {
 	this.beginFontSize = 256;
 	this.endFontSize = 32;

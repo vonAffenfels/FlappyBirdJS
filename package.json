@@ -1,0 +1,38 @@
+{
+	"name": "flappybird",
+	"author": "Saij",
+	"title": "Flappy Bird JS",
+	"version": "1.0.0",
+	"description": "A Flappy Bird clone written in JavaScript ES5 with Phaser Game Framework",
+	"contributors": [
+		{
+			"name": "Saij",
+			"email": "christoph@christophfriedrich.de"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/Saij/FlappyBirdJS/raw/master/LICENSE"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:Saij/FlappyBirdJS.git"
+	},
+	"private": true,
+	"devDependencies": {
+		"grunt": "^1.0.1",
+		"grunt-contrib-clean": "1.1.x",
+		"grunt-contrib-concat": "^1.0.1",
+		"grunt-contrib-connect": "1.0.x",
+		"grunt-contrib-copy": "1.0.x",
+		"grunt-contrib-uglify": "github:gruntjs/grunt-contrib-uglify#harmony",
+		"grunt-contrib-watch": "1.0.x",
+		"grunt-html-build": "0.7.x"
+	},
+	"dependencies": {
+		"@orange-games/phaser-i18next": "^1.0.3",
+		"phaser-ce": "^2.9.1"
+	}
+}

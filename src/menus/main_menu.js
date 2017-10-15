@@ -1,6 +1,3 @@
-if (!Game) Game = {};
-if (!Game.menus) Game.menus = {};
-
 Game.menus.MainMenu = function (game, state) {
 	Phaser.Group.call(this, game);
 

@@ -1,11 +1,8 @@
-if (!Game) Game = {};
-if (!Game.states) Game.states = {};
-
 Game.states.Boot = function (game) {}
 
 Game.states.Boot.prototype = {
 	preload: function(){
-          this.game.load.image("loading","assets/loading.png"); 
+          this.game.load.image("loading","assets/images/loading.png"); 
 	},
 
 	create: function () {

@@ -1,6 +1,3 @@
-if (!Game) Game = {};
-if (!Game.objects) Game.objects = {};
-
 Game.objects.TreeGroup = function (game, gap, speed, distance) {
 	Phaser.Group.call(this, game);
 

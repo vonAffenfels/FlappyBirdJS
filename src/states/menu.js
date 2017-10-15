@@ -1,6 +1,3 @@
-if (!Game) Game = {};
-if (!Game.states) Game.states = {};
-
 const MENU_MAIN 		= 0;
 const MENU_COLOR_SELECT = 1;
 

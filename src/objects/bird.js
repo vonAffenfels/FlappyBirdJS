@@ -1,6 +1,3 @@
-if (!Game) Game = {};
-if (!Game.objects) Game.objects = {};
-
 Game.objects.Bird = function (game, x, y) {
 	Phaser.Sprite.call(this, game, x, y, "img_bird");
 

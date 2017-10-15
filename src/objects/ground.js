@@ -1,6 +1,3 @@
-if (!Game) Game = {};
-if (!Game.objects) Game.objects = {};
-
 Game.objects.Ground = function (game, speed) {
 	Phaser.TileSprite.call(this, game, 0, game.height - 100, game.width, 100, "img_ground");
 

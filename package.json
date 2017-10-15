@@ -30,7 +30,8 @@
 		"grunt-contrib-uglify": "github:gruntjs/grunt-contrib-uglify#harmony",
 		"grunt-contrib-watch": "1.0.x",
 		"grunt-gh-pages": "^2.0.0",
-		"grunt-html-build": "0.7.x"
+		"grunt-html-build": "0.7.x",
+		"grunt-nw-builder": "^3.1.0"
 	},
 	"dependencies": {
 		"@orange-games/phaser-i18next": "^1.0.3",

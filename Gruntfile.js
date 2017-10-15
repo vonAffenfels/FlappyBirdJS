@@ -157,5 +157,4 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-html-build');
     grunt.loadNpmTasks('grunt-gh-pages');
-    grunt.loadNpmTasks('grunt-nw-builder');
 };

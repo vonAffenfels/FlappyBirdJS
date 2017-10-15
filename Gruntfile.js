@@ -3,6 +3,12 @@ var crypto = require('crypto');
 module.exports = function (grunt) {
     'use strict';
 
+    var concatSrc = [
+        'node_modules/phaser-ce/build/phaser.js',
+        'node_modules/@orange-games/phaser-i18next/build/phaser-i18next.min.js',
+        'src/**/*.js'
+    ];
+
     grunt.initConfig({
         // Get some details from the package.json
         game: grunt.file.readJSON('package.json'),
@@ -33,15 +39,15 @@ module.exports = function (grunt) {
 
         concat: {
             options: {
-                separator: ';\n'
+                separator: ';\n\n'
             },
             dist: {
-                src: ['src/**/*.js'],
-                dest: '_build/dist/<%= game.name %>-<%= game.version %>.js'
+                src: concatSrc,
+                dest: '_build/dist/game-<%= game.version %>.js'
             },
             dev: {
-                src: ['src/**/*.js'],
-                dest: '_build/dev/<%= game.name %>.js'
+                src: concatSrc,
+                dest: '_build/dev/game.js'
             }
         },
 
@@ -79,11 +85,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    '_build/dist/<%= game.name %>.min.js': [
-                        'node_modules/phaser-ce/build/phaser.min.js',
-                        'node_modules/@organge-games/phaser-i18next/build/phaser-i18next.min.js',
-                        '_build/dist/<%= game.name %>-<%= game.version %>.js'
-                    ]
+                    '_build/dist/game.min.js': '_build/dist/game-<%= game.version %>.js'
                 }
             }
         },

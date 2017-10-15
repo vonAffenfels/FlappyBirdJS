@@ -32,9 +32,9 @@
 		"grunt-contrib-uglify": "github:gruntjs/grunt-contrib-uglify#harmony",
 		"grunt-contrib-watch": "1.0.x",
 		"grunt-gh-pages": "^2.0.0",
-		"grunt-html-build": "0.7.x"
+		"grunt-html-build": "0.7.x",
+		"phaser-ce": "^2.9.1"
 	},
 	"dependencies": {
-		"phaser-ce": "^2.9.1"
 	}
 }

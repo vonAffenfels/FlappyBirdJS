@@ -1,10 +1,5 @@
 var crypto = require('crypto');
 
-var libs = [
-    'phaser-ce/build/phaser',
-    '@organge-games/phaser-i18next/build/phaser-i18next'
-];
-
 module.exports = function (grunt) {
     'use strict';
 
@@ -86,7 +81,7 @@ module.exports = function (grunt) {
                 files: {
                     '_build/dist/<%= game.name %>.min.js': [
                         'node_modules/phaser-ce/build/phaser.min.js',
-                        'node_modules/@organge-games/phaser-i18next/build/phaser-i18next.min.js'
+                        'node_modules/@organge-games/phaser-i18next/build/phaser-i18next.min.js',
                         '_build/dist/<%= game.name %>-<%= game.version %>.js'
                     ]
                 }

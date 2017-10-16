@@ -5,14 +5,14 @@ module.exports = function (grunt) {
 
     var concatSrc = [
         'node_modules/phaser-ce/build/phaser.js',
-        'node_modules/@orange-games/phaser-i18next/build/phaser-i18next.min.js',
-        'src/**/*.js'
+        'node_modules/@orange-games/phaser-i18next/build/phaser-i18next.js',
+        '_build/game.js'
     ];
 
     grunt.initConfig({
-        // Get some details from the package.json
+        
         game: grunt.file.readJSON('package.json'),
-        // Configure the connect server that will be run
+        
         connect: {
             server: {
                 options: {
@@ -41,6 +41,10 @@ module.exports = function (grunt) {
             options: {
                 separator: ';\n\n'
             },
+            game: {
+                src: 'src/**/*.js',
+                dest: '_build/game.js'
+            },
             dist: {
                 src: concatSrc,
                 dest: '_build/dist/game-<%= game.version %>.js'
@@ -65,23 +69,30 @@ module.exports = function (grunt) {
             },
             source: {
                 files: ['src/**/*.js'],
-                tasks: ['concat:dev']
+                tasks: ['concat:game', 'babel:game', 'concat:dev', 'clean:game']
+            }
+        },
+
+        babel: {
+            options: {
+                presets: ['es2015']
+            },
+            game: {
+                files: {
+                    '_build/game.js': '_build/game.js'
+                }
             }
         },
 
         uglify: {
             options: {
-                compress: {
-                    sequences: true,
-                    dead_code: true,
-                    conditionals: true,
-                    booleans: true,
-                    unused: true,
-                    if_return: true,
-                    join_vars: true,
-                    drop_console: true
-                },
-                mangle: true
+                mangle: true,
+                compress: true,
+                beautify: false,
+                sourceMap: false,
+                preserveComments: false,
+                report: "min",
+                except: []
             },
             dist: {
                 files: {
@@ -92,6 +103,7 @@ module.exports = function (grunt) {
 
         clean: {
             dist: ['_build/dist/*'],
+            game: ['_build/game.js'],
             temp: ['_build/dist/*.js', '!_build/dist/*.min.js']
         },
 
@@ -132,8 +144,11 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dist', [
         'clean:dist',
+        'concat:game',
+        'babel:game',
         'copy:dist',
         'concat:dist',
+        'clean:game',
         'uglify:dist',
         'clean:temp',
         'htmlbuild:dist'
@@ -141,7 +156,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', [
         'copy:dev',
+        'concat:game',
+        'babel:game',
         'concat:dev',
+        'clean:game',
         'htmlbuild:dev',
         'connect:server',
         'watch'
@@ -158,6 +176,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-html-build');
     grunt.loadNpmTasks('grunt-gh-pages');
 };

@@ -23,7 +23,7 @@ let Game = {
 			speed: 		-200,
 
 			// Distance between trees in X
-			distance: 	300
+			distance: 	300 
 		}
 	},
 

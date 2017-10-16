@@ -8,7 +8,7 @@ class Game extends Phaser.Game {
 
 		for (let stateName in Game.Enums.States) {
 			let state = Game.Enums.States[stateName]
-			this.state.add(state, window[state], false);
+			this.state.add(state, window[state]);
 		}
 
 		this.state.start(this.config.get("defaultState"));

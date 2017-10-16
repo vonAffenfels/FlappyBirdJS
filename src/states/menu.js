@@ -18,7 +18,7 @@ class MenuState extends Phaser.State {
 		this.title.anchor.setTo(0.5);
 
 		// Draw Highscore
-		this.highscore = this.game.add.bitmapText(this.game.world.centerX, 250, "fnt_flappy", "Highscore: " + this.game.save.get("highscore"), 48);
+		this.highscore = this.game.add.translatedBitmapText(this.game.world.centerX, 250, "fnt_flappy", "highscore", 48, 'left', {score: this.game.save.get("highscore")});
 		this.highscore.anchor.setTo(0.5);
 
 		this.menus[Game.Enums.Menus.MAIN] = new MainMenu(this.game, this);

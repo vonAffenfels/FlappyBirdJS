@@ -9,7 +9,7 @@ class MainMenu extends Phaser.Group {
 
 		this.items = [
 			{
-				text: "Start",
+				text: "start",
 				action: function () {
 					this.game.state.start(Game.Enums.States.PLAY);
 				}
@@ -18,7 +18,7 @@ class MainMenu extends Phaser.Group {
 
 		if (this.game.config.get("availableColors", 1) > 1) {
 			this.items.push({
-				text: "Farbwahl",
+				text: "colorSelect",
 				action: function () {
 					this.state.changeMenu(Game.Enums.Menus.COLOR_SELECT);
 				}
@@ -44,7 +44,7 @@ class MainMenu extends Phaser.Group {
 
 			// Only highlight if current item and no touch available
 			let shouldHighlight = (i == this.curSel && !Phaser.Device.touch);
-			this.items[i].obj = this.game.add.bitmapText(this.game.world.centerX, posY, "fnt_flappy", this.items[i].text, shouldHighlight ? this.fontSizeHighlight : this.fontSize, this);
+			this.items[i].obj = this.game.add.translatedBitmapText(this.game.world.centerX, posY, "fnt_flappy", this.items[i].text, shouldHighlight ? this.fontSizeHighlight : this.fontSize, null, null, this);
 			this.items[i].obj.anchor.setTo(0.5, 0);
 			this.items[i].obj.inputEnabled = true;
 			this.items[i].obj.events.onInputOver.add(function () {

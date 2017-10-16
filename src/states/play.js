@@ -29,25 +29,25 @@ class PlayState extends Phaser.State {
 		this.scoreBoard.visible = false;
 
 		// Draw Gameover Screen
-		let gameoverText = "Press Space to continue";
+		let gameoverText = "spaceToContinue";
 		if (Phaser.Device.touch) {
-			gameoverText = "Tap to continue";
+			gameoverText = "tapToContinue";
 		}
 
-		this.gameoverHeadline = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY - 50, "fnt_flappy", "Game Over", 160);
+		this.gameoverHeadline = this.game.add.translatedBitmapText(this.game.world.centerX, this.game.world.centerY - 50, "fnt_flappy", "gameover", 160);
 		this.gameoverHeadline.anchor.setTo(0.5);
 		this.gameoverHeadline.visible = false;
-		this.gameoverSubline = this.game.add.bitmapText(this.game.world.centerX, this.game.world.centerY + 70, "fnt_flappy", gameoverText, 64);
+		this.gameoverSubline = this.game.add.translatedBitmapText(this.game.world.centerX, this.game.world.centerY + 70, "fnt_flappy", gameoverText, 64);
 		this.gameoverSubline.anchor.setTo(0.5);
 		this.gameoverSubline.visible = false;
 
 		// New Highscore Message
-		this.highscoreMessage = this.game.add.bitmapText(this.game.world.centerX, 200, "fnt_flappy", "Neuer Highscore!", 64);
+		this.highscoreMessage = this.game.add.translatedBitmapText(this.game.world.centerX, 200, "fnt_flappy", "newHighscore", 64);
 		this.highscoreMessage.anchor.setTo(0.5);
 		this.highscoreMessage.visible = false;
 
 		// Draw Countdown
-		this.countdown = this.game.add.bitmapText(this.game.world.centerX, 200, "fnt_flappy", this.countdownPosition, this.beginFontSize);
+		this.countdown = this.game.add.translatedBitmapText(this.game.world.centerX, 200, "fnt_flappy", this.countdownPosition, this.beginFontSize);
 		this.countdown.anchor.setTo(0.5);
 
 		// Countdown Tween
@@ -61,7 +61,7 @@ class PlayState extends Phaser.State {
 		this.countdownPosition--;
 
 		if (this.countdownPosition > -1) {
-			this.countdown.setText(this.countdownPosition > 0 ? this.countdownPosition : "Start");
+			this.countdown.setText(this.countdownPosition > 0 ? this.countdownPosition : "go");
 			this.countdown.alpha = 1;
 			this.countdown.fontSize = this.beginFontSize;
 			this.countdownTween.start();
@@ -114,7 +114,7 @@ class PlayState extends Phaser.State {
 
 		if (this.gameover) {
 			// Exit to Mainmenu
-			this.game.state.start("menu");
+			this.game.state.start(Games.Enums.States.MENU);
 		}
 	}
 

@@ -14,6 +14,8 @@ class LoadingState extends Phaser.State {
 		this.game.load.image("img_ground", "assets/images/img_ground.png");
 
 		this.load.bitmapFont("fnt_flappy", 'assets/fonts/fnt_flappy.png', 'assets/fonts/fnt_flappy.fnt');
+
+		this.load.locale(['en', 'de'], ['translation']);
 	}
 
 	create() {

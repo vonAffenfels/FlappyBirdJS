@@ -6,6 +6,7 @@ module.exports = function (grunt) {
     var concatSrc = [
         'node_modules/phaser-ce/build/phaser.js',
         'node_modules/@orange-games/phaser-i18next/build/phaser-i18next.js',
+        'node_modules/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.js',
         '_build/game.js'
     ];
 

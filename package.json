@@ -36,6 +36,7 @@
     "grunt-contrib-watch": "1.0.x",
     "grunt-gh-pages": "^2.0.0",
     "grunt-html-build": "0.7.x",
+    "i18next-browser-languagedetector": "^2.0.0",
     "phaser-ce": "^2.9.1"
   },
   "dependencies": {}

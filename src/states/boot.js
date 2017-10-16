@@ -8,22 +8,35 @@ class BootState extends Phaser.State {
 	}
 
 	create() {
-		// set scale mode to cover the entire screen
+		// Set scale mode to cover the entire screen
 		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		this.scale.pageAlignVertically = true;
 		this.scale.pageAlignHorizontally = true;
 
-		// set a black color for the background of the stage
+		// Set a black color for the background of the stage
 		this.game.stage.backgroundColor = "#000000";
 
-		// start the Phaser arcade physics engine
+		// Start the Phaser arcade physics engine
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-		// set the gravity of the world
+		// Set the gravity of the world
 		this.game.physics.arcade.gravity.y = this.game.config.get("physics.gravity");
 
-		// keep game running if it loses the focus
+		// Keep game running if it loses the focus
 		this.game.stage.disableVisibilityChange = true;
+
+		// Load locales Plug-In
+		this.game.plugins.add(PhaserI18n.Plugin, {
+			fallbackLng: 'en',
+			backend: {
+				loadPath: 'assets/locales/{{lng}}.json'
+			},
+			load: 'languageOnly',
+			debug: false,
+            detection: {
+                order: ['navigator']
+            }
+		}, window.i18nextBrowserLanguageDetector);
 
 		// Start loading stage
 		this.game.state.start(Game.Enums.States.LOADING);

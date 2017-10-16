@@ -1,0 +1,11 @@
+{
+	"title": "Flappy Bird JS",
+	"highscore": "Highscore: {{score}}",
+	"colorSelect": "Farbwahl",
+	"start": "Start",
+	"gameover": "Game Over",
+	"spaceToContinue": "Leertaste zum Fortfahren",
+	"tapToContinue": "Tippen zum Fortfahren",
+	"newHighscore": "Neuer Highscore!",
+	"go": "Start!"
+}

@@ -9,22 +9,29 @@
     <title><%= title %></title>
     <!-- /build -->
 
-    <script src="game.js"></script>
-
     <script type="text/javascript">
+        //This all here is for cache busting;
+        function addScript(src, buster, callback) {
+            var s = document.createElement('script');
+            s.setAttribute('src', src + '?v=' + buster);
+            if (typeof callback === 'function') {
+                s.onload = callback;
+            }
+            document.body.appendChild(s);
+        }
+
+        <!-- build:process -->
         window.onload = function() {
-            var game = new Phaser.Game(Game.config.width, Game.config.height, Phaser.CANVAS, 'gameContainer');
-            game.state.add("boot", Game.States.Boot);
-            game.state.add("loading", Game.States.Loading);
-            game.state.add("menu", Game.States.Menu);
-            game.state.add("play", Game.States.Play);
-            game.state.start("boot");
-        };
+            addScript('game.js', Date.now(), function () {
+                new Game();
+            });
+        }
+        <!-- /build -->
     </script>
 
     <style>
         body {
-            margin: 0; 
+            margin: 0;
             background: #000000; 
             padding: 0;
             overflow: hidden;

@@ -30,9 +30,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: [
-                    {expand: true, cwd: 'assets/images', dest: '_build/dist/assets/images', src: ['**/*']},
-                    {expand: true, cwd: 'assets/sounds', dest: '_build/dist/assets/sounds', src: ['**/*', '!**/*.wav']},
-                    {expand: true, cwd: 'assets/fonts', dest: '_build/dist/assets/fonts', src: ['**/*']}
+                    {expand: true, cwd: 'assets', dest: '_build/dist/assets', src: ['**/*', '!**/*.wav']}
                 ]
             }
         },
@@ -42,7 +40,7 @@ module.exports = function (grunt) {
                 separator: ';\n\n'
             },
             game: {
-                src: 'src/**/*.js',
+                src: ['src/game.js', 'src/**/*.js'],
                 dest: '_build/game.js'
             },
             dist: {
@@ -75,7 +73,7 @@ module.exports = function (grunt) {
 
         babel: {
             options: {
-                presets: ['es2015']
+                presets: ['env']
             },
             game: {
                 files: {
@@ -115,7 +113,6 @@ module.exports = function (grunt) {
                     data: {
                         // Data to pass to templates
                         version: "<%= game.version %>",
-                        gameName: "<%= game.name %>",
                         title: "<%= game.title %>"
                     }
                 }
@@ -125,9 +122,6 @@ module.exports = function (grunt) {
                 dest: '_build/dev/index.html',
                 options: {
                     data: {
-                        // Data to pass to templates
-                        version: "<%= game.version %>",
-                        gameName: "<%= game.name %>",
                         title: "<%= game.title %>"
                     }
                 }                

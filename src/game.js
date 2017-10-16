@@ -1,60 +1,16 @@
-let Game = {
-	States: 	{},
-	Objects: 	{},
-	Menus: 		{}, 
+class Game extends Phaser.Game {
+	constructor() {
+		let config = new GameConfig();
+		super(config.get("game"));
 
-	config: {
-		width: 		1024,
-		height: 	768,
+		this.config = config;
+		this.save = new GameSave(this);
 
-		availableColors: 	10,
-		scoreGain:  		10,
-
-		physics: {
-			gravity: 1300,
-			flapForce: -400
-		},
-
-		trees: {
-			// Gap between trees in Y
-			gap: 		150,
-
-			// Speed of the trees (and ground)
-			speed: 		-200,
-
-			// Distance between trees in X
-			distance: 	300 
+		for (let stateName in Game.Enums.States) {
+			let state = Game.Enums.States[stateName]
+			this.state.add(state, window[state], false);
 		}
-	},
 
-	save: {
-		version: 0x000001,
-		selectedColor: 0,
-		highscore: 0
+		this.state.start(this.config.get("defaultState"));
 	}
-}
-
-Game.saveState = function () {
-	localStorage.setItem("FlappyBirdJS", JSON.stringify(Game.save));
-}
-
-Game.loadState = function () {
-	let saveState = localStorage.getItem("FlappyBirdJS");
-	if (!saveState) {
-		Game.saveState();
-		return;
-	}
-	
-	let saveObj = JSON.parse(saveState);
-	if (!saveObj) {
-		Game.saveState();
-		return;
-	}
-
-	if (!saveObj.version || saveObj.version != Game.save.version) {
-		Game.saveState();
-		return;
-	}
-
-	Game.save = saveObj;
 }

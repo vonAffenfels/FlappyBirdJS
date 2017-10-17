@@ -1,4 +1,4 @@
-class GameSave {
+export default class GameSave {
 	constructor(game) {
 		this.game = game;
 

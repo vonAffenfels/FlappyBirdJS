@@ -1,4 +1,6 @@
-class BirdObject extends Phaser.Sprite {
+import Phaser from 'phaser'; 
+
+export default class BirdObject extends Phaser.Sprite {
 	constructor(game, x, y) {
 		super(game, x, y, "img_bird");
 

@@ -1,3 +1,12 @@
+import 'pixi';
+import 'p2';
+import Phaser from 'phaser';
+
+import Enums from './enums';
+import GameSave from './save';
+import GameConfig from './config';
+import * as States from './states';
+
 class Game extends Phaser.Game {
 	constructor() {
 		let config = new GameConfig();
@@ -6,11 +15,13 @@ class Game extends Phaser.Game {
 		this.config = config;
 		this.save = new GameSave(this);
 
-		for (let stateName in Game.Enums.States) {
-			let state = Game.Enums.States[stateName]
-			this.state.add(state, window[state]);
+		for (let stateName in Enums.States) {
+			let state = Enums.States[stateName]
+			this.state.add(state, States[state]);
 		}
 
 		this.state.start(this.config.get("defaultState"));
 	}
 }
+
+window.Game = Game;

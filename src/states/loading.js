@@ -1,4 +1,8 @@
-class LoadingState extends Phaser.State {
+import Phaser from 'phaser';
+
+import Enums from '../enums';
+
+export class LoadingState extends Phaser.State {
 	constructor() {
 		super();
 	}
@@ -22,6 +26,6 @@ class LoadingState extends Phaser.State {
 		// set a blue color for the background of the stage
 		this.game.stage.backgroundColor = this.game.config.get("game.backgroundColor");
 
-		this.game.state.start(Game.Enums.States.MENU);
+		this.game.state.start(Enums.States.MENU);
 	}
 }

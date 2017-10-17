@@ -22,7 +22,7 @@
 
         <!-- build:process -->
         window.onload = function() {
-            addScript('game.js', Date.now(), function () {
+            addScript('game.js', <%= version %>, function () {
                 new Game();
             });
         }

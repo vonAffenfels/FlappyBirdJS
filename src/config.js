@@ -1,4 +1,8 @@
-class GameConfig {
+import Phaser from 'phaser';
+
+import Enums from './enums';
+
+export default class GameConfig {
 	constructor() {
 		this._data = {
 			game: {
@@ -10,7 +14,7 @@ class GameConfig {
 				name: "FlappyBirdJS"
 			},
 
-			defaultState: 		Game.Enums.States.BOOT,
+			defaultState: 		Enums.States.BOOT,
 			availableColors: 	10,
 			scoreGain:  		10,
 

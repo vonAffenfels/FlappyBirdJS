@@ -1,4 +1,8 @@
-class ColorSelectMenu extends Phaser.Group {
+import Phaser from 'phaser';
+
+import Enums from '../enums';
+
+export default class ColorSelectMenu extends Phaser.Group {
 	constructor(game, state) {
 		super(game);
 
@@ -72,7 +76,7 @@ class ColorSelectMenu extends Phaser.Group {
 
 	_setColor(color) {
 		this.game.save.set("selectedColor", color);
-		this.state.changeMenu(Game.Enums.Menus.MAIN);
+		this.state.changeMenu(Enums.Menus.MAIN);
 	}
 
 	_setSelected(index) {

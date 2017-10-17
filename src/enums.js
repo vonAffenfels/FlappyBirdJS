@@ -1,4 +1,4 @@
-Game.Enums = {
+export default {
 	Menus: {
 		MAIN: 0,
 		COLOR_SELECT: 1

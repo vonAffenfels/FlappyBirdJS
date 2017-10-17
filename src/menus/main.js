@@ -1,4 +1,8 @@
-class MainMenu extends Phaser.Group {
+import Phaser from 'phaser';
+
+import Enums from '../enums';
+
+export default class MainMenu extends Phaser.Group {
 	constructor(game, state) {
 		super(game);
 
@@ -11,7 +15,7 @@ class MainMenu extends Phaser.Group {
 			{
 				text: "start",
 				action: function () {
-					this.game.state.start(Game.Enums.States.PLAY);
+					this.game.state.start(Enums.States.PLAY);
 				}
 			}
 		];
@@ -20,7 +24,7 @@ class MainMenu extends Phaser.Group {
 			this.items.push({
 				text: "colorSelect",
 				action: function () {
-					this.state.changeMenu(Game.Enums.Menus.COLOR_SELECT);
+					this.state.changeMenu(Enums.Menus.COLOR_SELECT);
 				}
 			});
 		}

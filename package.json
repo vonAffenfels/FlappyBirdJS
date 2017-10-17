@@ -25,19 +25,22 @@
   "devDependencies": {
     "@orange-games/phaser-i18next": "^1.0.3",
     "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
+    "expose-loader": "^0.7.3",
     "grunt": "^1.0.1",
-    "grunt-babel": "^7.0.0",
     "grunt-contrib-clean": "1.1.x",
-    "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "1.0.x",
     "grunt-contrib-copy": "1.0.x",
-    "grunt-contrib-uglify": "^3.1.0",
     "grunt-contrib-watch": "1.0.x",
     "grunt-gh-pages": "^2.0.0",
     "grunt-html-build": "0.7.x",
+    "grunt-webpack": "^3.0.2",
     "i18next-browser-languagedetector": "^2.0.0",
-    "phaser-ce": "^2.9.1"
+    "phaser-ce": "^2.9.1",
+    "script-loader": "^0.7.2",
+    "webpack": "^3.8.0",
+    "webpack-dev-server": "^2.9.2"
   },
   "dependencies": {}
 }

@@ -1,4 +1,10 @@
-class BootState extends Phaser.State {
+import Phaser from 'phaser';
+import 'phaser-i18next';
+import LngDetector from 'i18next-browser-languagedetector';
+
+import Enums from '../enums';
+
+export class BootState extends Phaser.State {
 	constructor() {
 		super();
 	}
@@ -36,9 +42,9 @@ class BootState extends Phaser.State {
             detection: {
                 order: ['navigator']
             }
-		}, window.i18nextBrowserLanguageDetector);
+		}, LngDetector);
 
 		// Start loading stage
-		this.game.state.start(Game.Enums.States.LOADING);
+		this.game.state.start(Enums.States.LOADING);
 	}
 }

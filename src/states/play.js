@@ -1,4 +1,13 @@
-class PlayState extends Phaser.State {
+import Phaser from 'phaser';
+
+import Enums from '../enums';
+
+// Objects
+import TreeGroupObject from '../objects/tree_group';
+import GroundObject from '../objects/ground';
+import BirdObject from '../objects/bird';
+
+export class PlayState extends Phaser.State {
 	constructor() {
 		super();
 
@@ -114,7 +123,7 @@ class PlayState extends Phaser.State {
 
 		if (this.gameover) {
 			// Exit to Mainmenu
-			this.game.state.start(Games.Enums.States.MENU);
+			this.game.state.start(Enums.States.MENU);
 		}
 	}
 
@@ -150,7 +159,7 @@ class PlayState extends Phaser.State {
 
 		if (this.gameover && keySpace.justPressed()) {
 			// Exit to Mainmenu
-			this.game.state.start(Game.Enums.States.MENU);
+			this.game.state.start(Enums.States.MENU);
 		}
 	}
 }

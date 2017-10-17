@@ -1,4 +1,16 @@
-class MenuState extends Phaser.State {
+import Phaser from 'phaser';
+
+import Enums from '../enums';
+
+// Objects
+import TreeGroupObject from '../objects/tree_group';
+import GroundObject from '../objects/ground';
+
+// Menus
+import MainMenu from '../menus/main';
+import ColorSelectMenu from '../menus/color_select';
+
+export class MenuState extends Phaser.State {
 	constructor() {
 		super();
 		this.menus = [];
@@ -21,15 +33,15 @@ class MenuState extends Phaser.State {
 		this.highscore = this.game.add.translatedBitmapText(this.game.world.centerX, 250, "fnt_flappy", "highscore", 48, 'left', {score: this.game.save.get("highscore")});
 		this.highscore.anchor.setTo(0.5);
 
-		this.menus[Game.Enums.Menus.MAIN] = new MainMenu(this.game, this);
-		this.menus[Game.Enums.Menus.MAIN].draw();
-		this.game.add.existing(this.menus[Game.Enums.Menus.MAIN]);
+		this.menus[Enums.Menus.MAIN] = new MainMenu(this.game, this);
+		this.menus[Enums.Menus.MAIN].draw();
+		this.game.add.existing(this.menus[Enums.Menus.MAIN]);
 
-		this.menus[Game.Enums.Menus.COLOR_SELECT] = new ColorSelectMenu(this.game, this);
-		this.menus[Game.Enums.Menus.COLOR_SELECT].draw();
-		this.game.add.existing(this.menus[Game.Enums.Menus.COLOR_SELECT]);
+		this.menus[Enums.Menus.COLOR_SELECT] = new ColorSelectMenu(this.game, this);
+		this.menus[Enums.Menus.COLOR_SELECT].draw();
+		this.game.add.existing(this.menus[Enums.Menus.COLOR_SELECT]);
 
-		this.changeMenu(Game.Enums.Menus.MAIN);
+		this.changeMenu(Enums.Menus.MAIN);
 	}
 
 	update() {

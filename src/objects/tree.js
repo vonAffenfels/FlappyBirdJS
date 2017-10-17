@@ -1,4 +1,6 @@
-class TreeObject extends Phaser.Group {
+import Phaser from 'phaser';
+
+export default class TreeObject extends Phaser.Group {
 	constructor(game, parent, index, gap, speed) {
 		super(game, parent);
 

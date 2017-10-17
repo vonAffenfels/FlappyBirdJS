@@ -15,6 +15,7 @@ export default class MainMenu extends Phaser.Group {
 			{
 				text: "start",
 				action: function () {
+					console.log("HERE 2");
 					this.game.state.start(Enums.States.PLAY);
 				}
 			}
@@ -24,18 +25,19 @@ export default class MainMenu extends Phaser.Group {
 			this.items.push({
 				text: "colorSelect",
 				action: function () {
+					console.log("HERE");
 					this.state.changeMenu(Enums.Menus.COLOR_SELECT);
 				}
 			});
 		}
 
-		this.fontSize = 64;
-		this.fontSizeHighlight = 74;
+		this.fontSize = 28;
+		this.fontSizeHighlight = 34;
 		this.selectorSpace = 16;
 	}
 
 	draw() {
-		let space = 16;
+		let space = 28;
 
 		// Calculate height of whole menu
 		let menuHeight = (this.fontSize + space) * this.items.length - space;
@@ -51,11 +53,8 @@ export default class MainMenu extends Phaser.Group {
 			this.items[i].obj = this.game.add.translatedBitmapText(this.game.world.centerX, posY, "fnt_flappy", this.items[i].text, shouldHighlight ? this.fontSizeHighlight : this.fontSize, null, null, this);
 			this.items[i].obj.anchor.setTo(0.5, 0);
 			this.items[i].obj.inputEnabled = true;
-			this.items[i].obj.events.onInputOver.add(function () {
-				this._setSelected(i);
-			}, this);
 			this.items[i].obj.events.onInputDown.add(function () {
-				this.items[this.curSel].action.call(this);
+				this.items[i].action.call(this);
 			}, this);
 			this.items[i].y = posY;
 		}
@@ -66,6 +65,7 @@ export default class MainMenu extends Phaser.Group {
 		this.selector.animations.add("flap", [this.curColor * 2, this.curColor * 2 + 1]);
 		this.selector.animations.play("flap", 8, true);
 		this.selector.anchor.setTo(1, -0.5);
+		this.selector.scale.setTo(0.5);
 		this.selector.visible = !Phaser.Device.touch;
 
 		if (Phaser.Device.touch) {

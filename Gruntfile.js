@@ -141,7 +141,7 @@ module.exports = function (grunt) {
                     }),
                     new BrowserSyncPlugin({
                         host: process.env.IP || 'localhost',
-                        port: process.env.PORT || 8080,
+                        port: process.env.PORT || 80,
                         server: {
                             baseDir: ['./', './_build']
                         }

@@ -6,8 +6,8 @@ export default class GameConfig {
 	constructor() {
 		this._data = {
 			game: {
-				width: 1024,
-				height: 768,
+				width: 320,
+				height: 568,
 				enableDebug: false,
 				backgroundColor: '#89bfdc',
 				renderer: Phaser.CANVAS,

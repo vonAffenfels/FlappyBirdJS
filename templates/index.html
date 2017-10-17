@@ -5,28 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     
-    <!-- build:process -->
-    <title><%= title %></title>
-    <!-- /build -->
+    <title>Flappy Bird JS</title>
 
     <script type="text/javascript">
-        //This all here is for cache busting;
-        function addScript(src, buster, callback) {
-            var s = document.createElement('script');
-            s.setAttribute('src', src + '?v=' + buster);
-            if (typeof callback === 'function') {
-                s.onload = callback;
-            }
-            document.body.appendChild(s);
-        }
-
-        <!-- build:process -->
         window.onload = function() {
-            addScript('game.js', <%= version %>, function () {
-                new Game();
-            });
+            new Game();
         }
-        <!-- /build -->
     </script>
 
     <style>

@@ -20,7 +20,7 @@ export default class TreeGroupObject extends Phaser.Group {
 		this.firstTree = this.getAt(0);
 		this.lastTree = this.getAt(this.length - 1);
 		this.currentTree = this.firstTree;
-	}
+	} 
 
 	checkVisibilty() {
 		if (this.firstTree.getWorldX() < -this.firstTree.width) {

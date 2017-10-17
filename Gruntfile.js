@@ -1,4 +1,8 @@
 var path = require("path");
+var webpack = require("webpack");
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin')
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = function (grunt) {
     'use strict';
@@ -11,21 +15,63 @@ module.exports = function (grunt) {
 
     var phaseri18next = path.join(__dirname, '/node_modules/@orange-games/phaser-i18next/build/phaser-i18next.min');
 
-    grunt.initConfig({
-        
-        game: grunt.file.readJSON('package.json'),
-        
-        connect: {
-            server: {
-                options: {
-                    port: 8080,
-                    base: ['_build/']
-                }
-            }
+    var webpackConfig = {
+        entry: {
+            app: [path.resolve(__dirname, 'src/game')],
+            vendor: ['pixi', 'p2', 'phaser', 'phaser-i18next']
         },
+        module: {
+            rules: [
+                { 
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: [
+                        {
+                            loader: 'babel-loader', 
+                            query: {
+                                presets: ['env']
+                            }
+                        }
+                    ], 
+                    include: path.join(__dirname, 'src') 
+                },
+                { 
+                    test: /pixi\.js/, 
+                    use: ['expose-loader?PIXI'] 
+                },
+                { 
+                    test: /phaser-split\.js$/, 
+                    use: ['expose-loader?Phaser'] 
+                },
+                { 
+                    test: /p2\.js/, 
+                    use: ['expose-loader?p2'] 
+                },
+                { 
+                    test: /phaser-i18next\./, 
+                    use: ['script-loader'] 
+                }
+            ]
+        },
+        output: {
+            pathinfo: true,
+            path: path.resolve(__dirname, '_build'),
+            publicPath: "",
+            filename: 'game.js'
+        },
+        resolve: {
+            alias: {
+                'phaser': phaser,
+                'pixi': pixi,
+                'p2': p2,
+                'phaser-i18next': phaseri18next
+            }
+        }
+    }
 
+    grunt.initConfig({
         copy: {
-            game: {
+            dist: {
                 files: [
                     {expand: true, cwd: 'assets', dest: '_build/assets', src: ['**/*', '!**/*.wav']}
                 ]
@@ -33,150 +79,92 @@ module.exports = function (grunt) {
         },
 
         webpack: {
-            game: {
-                entry: {
-                    app: [path.resolve(__dirname, 'src/game')]
-                },
-                module: {
-                    rules: [
-                        { 
-                            test: /\.js$/,
-                            exclude: /node_modules/,
-                            use: [
-                                {
-                                    loader: 'babel-loader', 
-                                    query: {
-                                        presets: ['env']
-                                    }
-                                }
-                            ], 
-                            include: path.join(__dirname, 'src') 
-                        },
-                        { 
-                            test: /pixi\.js/, 
-                            use: ['expose-loader?PIXI'] 
-                        },
-                        { 
-                            test: /phaser-split\.js$/, 
-                            use: ['expose-loader?Phaser'] 
-                        },
-                        { 
-                            test: /p2\.js/, 
-                            use: ['expose-loader?p2'] 
-                        },
-                        { 
-                            test: /phaser-i18next\./, 
-                            use: ['script-loader'] 
+            dist: Object.assign({
+                plugins: [
+                    new CleanWebpackPlugin(['_build']),
+                    new webpack.optimize.UglifyJsPlugin({
+                        drop_console: true,
+                        minimize: true,
+                        output: {
+                            comments: false
                         }
-                    ]
-                },
-                output: {
-                    pathinfo: true,
-                    path: path.resolve(__dirname, '_build'),
-                    publicPath: "./_build",
-                    filename: 'game.js'
-                },
-                resolve: {
-                    alias: {
-                        'phaser': phaser,
-                        'pixi': pixi,
-                        'p2': p2,
-                        'phaser-i18next': phaseri18next
-                    }
-                }
-            },
-        },
-
-        watch: {
-            options: {
-                livereload: true
-            },
-            assets: {
-                files: ['assets/**/*.*'],
-                tasks: ['copy:game']
-            },
-            template: {
-                files: ['templates/index.html'],
-                tasks: ['htmlbuild:game']
-            },
-            source: {
-                files: ['src/**/*.js'],
-                tasks: ['webpack:game']
-            }
-        },
-
-        /*uglify: {
-            options: {
-                mangle: true,
-                compress: true,
-                beautify: false,
-                sourceMap: false,
-                preserveComments: false,
-                report: "min",
-                except: []
-            },
-            dist: {
-                files: {
-                    '_build/dist/game.min.js': '_build/dist/game-<%= game.version %>.js'
-                }
-            }
-        },*/
-
-        clean: {
-            game: ['_build/**']
-        },
-
-        htmlbuild: {
-            dist: {
-                src: 'templates/index.html',
-                dest: '_build/index.html',
-                options: {
-                    data: {
-                        // Data to pass to templates
-                        version: "'<%= game.version %>'",
-                        title: "<%= game.title %>"
-                    }
-                }
-            },
-            dev: {
-                src: 'templates/index.html',
-                dest: '_build/index.html',
-                options: {
-                    data: {
-                        title: "<%= game.title %>",
-                        version: "Date.now()"
-                    }
-                }                
-            }
+                    }),
+                    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor'/* chunkName= */, filename: 'vendor.js'/* filename= */}),
+                    new HtmlWebpackPlugin({
+                        filename: path.resolve(__dirname, '_build/index.html'),
+                        template: path.resolve(__dirname, 'templates/index.html'),
+                        chunks: ['vendor', 'app'],
+                        chunksSortMode: 'manual',
+                        minify: {
+                            removeAttributeQuotes: true,
+                            collapseWhitespace: true,
+                            html5: true,
+                            minifyCSS: true,
+                            minifyJS: true,
+                            minifyURLs: true,
+                            removeComments: true,
+                            removeEmptyAttributes: true
+                        },
+                        hash: true
+                    }),
+                    new BrowserSyncPlugin({
+                        host: process.env.IP || 'localhost',
+                        port: process.env.PORT || 8080,
+                        server: {
+                            baseDir: ['./', './_build']
+                        }
+                    })
+                ]
+            }, webpackConfig),
+            dev: Object.assign({
+                devtool: 'cheap-source-map',
+                watch: true,
+                plugins: [
+                    new CleanWebpackPlugin(['_build']),
+                    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor'/* chunkName= */, filename: 'vendor.js'/* filename= */}),
+                    new HtmlWebpackPlugin({
+                        filename: path.resolve(__dirname, '_build/index.html'),
+                        template: path.resolve(__dirname, 'templates/index.html'),
+                        chunks: ['vendor', 'app'],
+                        chunksSortMode: 'manual',
+                        minify: {
+                            removeAttributeQuotes: false,
+                            collapseWhitespace: false,
+                            html5: false,
+                            minifyCSS: false,
+                            minifyJS: false,
+                            minifyURLs: false,
+                            removeComments: false,
+                            removeEmptyAttributes: false
+                        },
+                        hash: false
+                    }),
+                    new BrowserSyncPlugin({
+                        host: process.env.IP || 'localhost',
+                        port: process.env.PORT || 8080,
+                        server: {
+                            baseDir: ['./', './_build']
+                        }
+                    })
+                ]
+            }, webpackConfig)
         },
 
         "gh-pages": {
             options: {
-                base: "_build/dist"
+                base: "_build/"
             },
             src: ['**']
         }
     });
 
     grunt.registerTask('dist', [
-        'clean:dist',
-        'concat:game',
-        'babel:game',
-        'copy:dist',
-        'concat:dist',
-        'clean:game',
-        'uglify:dist',
-        'clean:temp',
-        'htmlbuild:dist'
+        'webpack:dist',
+        'copy:dist'
     ]);
 
     grunt.registerTask('dev', [
-        'clean:game',
-        'copy:game',
-        'htmlbuild:dev',
-        'webpack:game',
-        'connect:server',
-        'watch'
+        'webpack:dev'
     ]);
 
     grunt.registerTask('deploy-gh', [
@@ -186,9 +174,6 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-webpack');
-    grunt.loadNpmTasks('grunt-html-build');
     grunt.loadNpmTasks('grunt-gh-pages');
 };

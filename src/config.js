@@ -12,7 +12,7 @@ export default class GameConfig {
 				width: "100%",
 				height: "100%",
 				enableDebug: false,
-				backgroundColor: '#89bfdc',
+				backgroundColor: '#FFFFFF',
 				renderer: Phaser.CANVAS,
 				name: "FlappyBirdJS"
 			},
@@ -25,7 +25,7 @@ export default class GameConfig {
 			},
 
 			defaultState: 		Enums.States.BOOT,
-			availableColors: 	10,
+			availableColors: 	1,
 			scoreGain:  		10,
 
 			physics: {

@@ -7,19 +7,19 @@
   "description": "A Flappy Bird clone written in JavaScript ES5 with Phaser Game Framework",
   "contributors": [
     {
-      "name": "Saij",
-      "email": "christoph@christophfriedrich.de"
+      "name": "Christoph Friedrich",
+      "email": "christoph.friedrich@vonaffenfels.de"
     }
   ],
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/Saij/FlappyBirdJS/raw/master/LICENSE"
+      "url": "https://github.com/vonAffenfels/FlappyBirdJS/raw/master/LICENSE"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:Saij/FlappyBirdJS.git"
+    "url": "git@github.com:vonAffenfels/FlappyBirdJS.git"
   },
   "private": true,
   "devDependencies": {

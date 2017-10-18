@@ -3,9 +3,9 @@ export default class GameSave {
 		this.game = game;
 
 		this._data = {
-			version: 1,
+			version: "vA-1.0.0",
 			highscore: 0,
-			selectedColor: 1
+			selectedColor: 0
 		};
 
 		this._load();
@@ -27,6 +27,9 @@ export default class GameSave {
 		}
 
 		this._data = saveObj;
+		if (this._data.selectedColor >= this.game.config.get("availableColors")) {
+			this._data.selectedColor = 0;
+		}
 	}
 
 	_save() {

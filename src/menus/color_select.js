@@ -50,11 +50,7 @@ export default class ColorSelectMenu extends Phaser.Group {
 		let baseX = Math.floor(this.game.world.centerX - (menuWidth / 2) + space / 2);
 		let baseY = Math.floor(this.game.world.centerY - (rowHeight / 2) * 3);
 
-		console.log(baseX);
-
 		let currentRow = 0;
-
-		console.log(rowHeight, menuHeight, rows, itemsInRow, menuWidth);
 
 		for (let i = 0; i < this.items.length; i++) {
 			if (i % itemsInRow == 0) {

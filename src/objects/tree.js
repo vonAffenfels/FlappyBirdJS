@@ -27,7 +27,7 @@ export default class TreeObject extends Phaser.Group {
 		this.gap = Math.min(this.game.world.height - 320, gap);
 
 		this.topMin = 110 - this.topTree.height;
-		this.topMax = this.game.world.height - this.topTree.height - this.gap - 210;
+		this.topMax = this.game.world.height - this.topTree.height - this.gap - 160;
 		this.running = false;
 	}
 

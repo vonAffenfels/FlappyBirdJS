@@ -16,6 +16,7 @@ export class PlayState extends Phaser.State {
 	create() {
 		let centerX = this.game.world.centerX;
 		let centerY = this.game.world.centerY;
+		let config	= this.game.config;
 
 		this.started = false;
 		this.gameover = false;
@@ -24,29 +25,32 @@ export class PlayState extends Phaser.State {
 		this.input.onTap.add(this._onTap, this);
 
 		// Draw trees
-		this.trees = new TreeGroupObject(this.game, this.game.config.get("trees.gap"), this.game.config.get("trees.speed"), this.game.config.get("trees.distance"));
+		this.trees = new TreeGroupObject(this.game, config.get("trees.gap"), config.get("trees.speed"), config.get("trees.distance"));
+		this.game.add.existing(this.trees);
 
 		// Draw ground
-		this.ground = new GroundObject(this.game, this.game.config.get("trees.speed"));
+		this.ground = new GroundObject(this.game, config.get("trees.speed"));
+		this.game.add.existing(this.ground);
 
 		// Draw bird
 		this.bird = new BirdObject(this.game, 50, centerY - 50);
+		this.game.add.existing(this.bird);
 
 		// Draw score
-		this.scoreBoard = this.game.add.bitmapText(centerX, 100, "fnt_flappy", this.score + "", this.game.config.get("fontSize.score"));
+		this.scoreBoard = this.game.add.bitmapText(centerX, 100, "fnt_flappy", this.score + "", config.get("fontSize.score"));
 		this.scoreBoard.anchor.setTo(0.5);
 		this.scoreBoard.visible = false;
 
 		// Draw Gameover Screen
-		this.gameoverHeadline = this.game.add.translatedBitmapText(centerX, centerY - 50, "fnt_flappy", "gameover", this.game.config.get("fontSize.title"));
+		this.gameoverHeadline = this.game.add.translatedBitmapText(centerX, centerY - 50, "fnt_flappy", "gameover", config.get("fontSize.title"));
 		this.gameoverHeadline.anchor.setTo(0.5);
 		this.gameoverHeadline.visible = false;
-		this.gameoverSubline = this.game.add.translatedBitmapText(centerX, centerY + 70, "fnt_flappy", Phaser.Device.touch ? "tapToContinue" : "spaceToContinue", this.game.config.get("fontSize.menu"));
+		this.gameoverSubline = this.game.add.translatedBitmapText(centerX, centerY + 70, "fnt_flappy", Phaser.Device.touch ? "tapToContinue" : "spaceToContinue", config.get("fontSize.menu"));
 		this.gameoverSubline.anchor.setTo(0.5);
 		this.gameoverSubline.visible = false;
 
 		// New Highscore Message
-		this.highscoreMessage = this.game.add.translatedBitmapText(centerX, centerY + 10, "fnt_flappy", "newHighscore", this.game.config.get("fontSize.menu"));
+		this.highscoreMessage = this.game.add.translatedBitmapText(centerX, centerY + 10, "fnt_flappy", "newHighscore", config.get("fontSize.menu"));
 		this.highscoreMessage.anchor.setTo(0.5);
 		this.highscoreMessage.visible = false;
 

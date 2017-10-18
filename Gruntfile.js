@@ -73,7 +73,7 @@ module.exports = function (grunt) {
         copy: {
             dist: {
                 files: [
-                    {expand: true, cwd: 'assets', dest: '_build/assets', src: ['**/*', '!**/*.wav']}
+                    {expand: true, cwd: 'assets', dest: '_build/assets', src: ['**/*', '!**/*.wav', '!**/*.ltr']}
                 ]
             }
         },

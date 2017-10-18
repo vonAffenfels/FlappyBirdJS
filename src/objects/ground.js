@@ -2,10 +2,9 @@ import Phaser from 'phaser';
 
 export default class GroundObject extends Phaser.TileSprite {
 	constructor(game, speed) {
-		super(game, 0, game.height - 100, game.width, 100, "img_ground");
+		super(game, 0, game.height - 50, game.width, 50, "img_ground");
 
 		this.speed = speed;
-		this.game.add.existing(this);
 	}
 
 	start() {

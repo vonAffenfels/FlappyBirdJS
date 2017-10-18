@@ -11,8 +11,6 @@ export default class BirdObject extends Phaser.Sprite {
 
 		this.animations.add("flap", [this.baseFrame, this.baseFrame + 1]);
 		this.frame = this.baseFrame;
-
-		this.game.add.existing(this);
 	}
 
 	start() {

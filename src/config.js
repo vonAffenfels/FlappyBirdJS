@@ -14,6 +14,13 @@ export default class GameConfig {
 				name: "FlappyBirdJS"
 			},
 
+			fontSize: {
+				title: 			42,
+				menu: 			28,
+				menuHighlight: 	34,
+				score: 			64
+			},
+
 			defaultState: 		Enums.States.BOOT,
 			availableColors: 	10,
 			scoreGain:  		10,

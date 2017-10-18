@@ -6,17 +6,17 @@ import Enums from '../enums';
 import TreeGroupObject from '../objects/tree_group';
 import GroundObject from '../objects/ground';
 import BirdObject from '../objects/bird';
+import CountdownObject from '../objects/countdown';
 
 export class PlayState extends Phaser.State {
 	constructor() {
 		super();
-
-		this.beginFontSize = 256;
-		this.endFontSize = 32;
 	}
 
 	create() {
-		this.countdownPosition = 3;
+		let centerX = this.game.world.centerX;
+		let centerY = this.game.world.centerY;
+
 		this.started = false;
 		this.gameover = false;
 		this.score = 0;
@@ -30,61 +30,45 @@ export class PlayState extends Phaser.State {
 		this.ground = new GroundObject(this.game, this.game.config.get("trees.speed"));
 
 		// Draw bird
-		this.bird = new BirdObject(this.game, 200, this.game.world.centerY);
+		this.bird = new BirdObject(this.game, 50, centerY - 50);
 
 		// Draw score
-		this.scoreBoard = this.game.add.bitmapText(this.game.world.centerX, 100, "fnt_flappy", this.score + "", 96);
+		this.scoreBoard = this.game.add.bitmapText(centerX, 100, "fnt_flappy", this.score + "", this.game.config.get("fontSize.score"));
 		this.scoreBoard.anchor.setTo(0.5);
 		this.scoreBoard.visible = false;
 
 		// Draw Gameover Screen
-		let gameoverText = "spaceToContinue";
-		if (Phaser.Device.touch) {
-			gameoverText = "tapToContinue";
-		}
-
-		this.gameoverHeadline = this.game.add.translatedBitmapText(this.game.world.centerX, this.game.world.centerY - 50, "fnt_flappy", "gameover", 160);
+		this.gameoverHeadline = this.game.add.translatedBitmapText(centerX, centerY - 50, "fnt_flappy", "gameover", this.game.config.get("fontSize.title"));
 		this.gameoverHeadline.anchor.setTo(0.5);
 		this.gameoverHeadline.visible = false;
-		this.gameoverSubline = this.game.add.translatedBitmapText(this.game.world.centerX, this.game.world.centerY + 70, "fnt_flappy", gameoverText, 64);
+		this.gameoverSubline = this.game.add.translatedBitmapText(centerX, centerY + 70, "fnt_flappy", Phaser.Device.touch ? "tapToContinue" : "spaceToContinue", this.game.config.get("fontSize.menu"));
 		this.gameoverSubline.anchor.setTo(0.5);
 		this.gameoverSubline.visible = false;
 
 		// New Highscore Message
-		this.highscoreMessage = this.game.add.translatedBitmapText(this.game.world.centerX, 200, "fnt_flappy", "newHighscore", 64);
+		this.highscoreMessage = this.game.add.translatedBitmapText(centerX, centerY + 10, "fnt_flappy", "newHighscore", this.game.config.get("fontSize.menu"));
 		this.highscoreMessage.anchor.setTo(0.5);
 		this.highscoreMessage.visible = false;
 
-		// Draw Countdown
-		this.countdown = this.game.add.translatedBitmapText(this.game.world.centerX, 200, "fnt_flappy", this.countdownPosition, this.beginFontSize);
-		this.countdown.anchor.setTo(0.5);
-
-		// Countdown Tween
-		this.countdownTween = this.game.add.tween(this.countdown);
-		this.countdownTween.to({fontSize: this.endFontSize, alpha: 0}, 1000, Phaser.Easing.Linear.None);
-		this.countdownTween.onComplete.add(this._countdown, this);
-		this.countdownTween.start();
+		// Countdown
+		this.countdown = new CountdownObject(this.game, centerX, 100);
+		this.countdown.onCountdownEnd.add(this._afterCountdown, this);
+		this.countdown.start();
+		this.game.add.existing(this.countdown);
 	}
 
-	_countdown() {
-		this.countdownPosition--;
+	_afterCountdown() {
+		this.countdown.destroy();
 
-		if (this.countdownPosition > -1) {
-			this.countdown.setText(this.countdownPosition > 0 ? this.countdownPosition : "go");
-			this.countdown.alpha = 1;
-			this.countdown.fontSize = this.beginFontSize;
-			this.countdownTween.start();
-		} else {
-			this.started = true;
+		this.started = true;
 
-			// Start moving objects
-			this.trees.start();
-			this.ground.start();
-			this.bird.start();
+		// Start moving objects
+		this.trees.start();
+		this.ground.start();
+		this.bird.start();
 
-			// Show scoreboard
-			this.scoreBoard.visible = true;
-		}
+		// Show scoreboard
+		this.scoreBoard.visible = true;
 	}
 
 	_gameover() {

@@ -17,6 +17,8 @@ export class MenuState extends Phaser.State {
 	}
 
 	create() {
+		let centerX = this.game.world.centerX;
+
 		// Draw trees
 		this.trees = new TreeGroupObject(this.game, this.game.config.get("trees.gap"), this.game.config.get("trees.speed"), this.game.config.get("trees.distance"));
 		this.trees.start();
@@ -26,11 +28,11 @@ export class MenuState extends Phaser.State {
 		this.ground.start();
 
 		// Draw title
-		this.title = this.game.add.bitmapText(this.game.world.centerX, 96, "fnt_flappy", "Flappy Bird JS", 42);
+		this.title = this.game.add.bitmapText(centerX, 96, "fnt_flappy", "Flappy Bird JS", this.game.config.get("fontSize.title"));
 		this.title.anchor.setTo(0.5);
 
 		// Draw Highscore
-		this.highscore = this.game.add.translatedBitmapText(this.game.world.centerX, 150, "fnt_flappy", "highscore", 28, 'left', {score: this.game.save.get("highscore")});
+		this.highscore = this.game.add.translatedBitmapText(centerX, 150, "fnt_flappy", "highscore", this.game.config.get("fontSize.menu"), 'left', {score: this.game.save.get("highscore")});
 		this.highscore.anchor.setTo(0.5);
 
 		this.menus[Enums.Menus.MAIN] = new MainMenu(this.game, this);

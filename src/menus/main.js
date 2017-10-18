@@ -15,7 +15,6 @@ export default class MainMenu extends Phaser.Group {
 			{
 				text: "start",
 				action: function () {
-					console.log("HERE 2");
 					this.game.state.start(Enums.States.PLAY);
 				}
 			}
@@ -25,14 +24,13 @@ export default class MainMenu extends Phaser.Group {
 			this.items.push({
 				text: "colorSelect",
 				action: function () {
-					console.log("HERE");
 					this.state.changeMenu(Enums.Menus.COLOR_SELECT);
 				}
 			});
 		}
 
-		this.fontSize = 28;
-		this.fontSizeHighlight = 34;
+		this.fontSize = this.game.config.get("fontSize.menu");
+		this.fontSizeHighlight = this.game.config.get("fontSize.menuHighlight");
 		this.selectorSpace = 16;
 	}
 

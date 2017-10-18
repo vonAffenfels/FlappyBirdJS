@@ -8,7 +8,10 @@ export default class TreeObject extends Phaser.Group {
 		this.speed = speed;
 
 		this.topTree = new Phaser.Sprite(this.game, 0, 0, "img_tree", 0);
+		this.topTree.scale.setTo(0.75);
+
 		this.bottomTree = new Phaser.Sprite(this.game, 0, 0, "img_tree", 1);
+		this.bottomTree.scale.setTo(0.75);
 
 		this.game.physics.arcade.enableBody(this.topTree);
 		this.game.physics.arcade.enableBody(this.bottomTree);

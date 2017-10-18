@@ -19,10 +19,12 @@ export default class ColorSelectMenu extends Phaser.Group {
 			});
 		}
 
-		this.imgWidth = 36;
 		this.scl = 1;
 		this.sclHighlight = 1.5;
-		this.selectorSpace = 16;
+		this.imgWidth 	= 36 * this.scl;
+		this.imgHeight 	= 36 * this.scl;
+		this.selectorFontSize = 54;
+		this.selectorSpace = 10;
 	}
 
 	draw() {
@@ -30,15 +32,43 @@ export default class ColorSelectMenu extends Phaser.Group {
 
 		// Calculate width of whole menu
 		let menuWidth = this.items.length * (this.imgWidth + space) - space;
+		let rows = 1;
+		let itemsInRow = this.items.length;
+		let menuSpace = this.game.world.width - space * 2;
 
-		// Calculate left most position
-		let baseY = this.game.world.centerX - (menuWidth / 2);
+		if (menuWidth > menuSpace) {
+			// Menu is wider than screen
+			rows = Math.ceil(menuWidth / menuSpace);
+			itemsInRow = Math.ceil(this.items.length / rows);
+			menuWidth = itemsInRow * (this.imgWidth + space) - space;
+		}
+
+		let rowHeight = this.imgHeight + this.selectorSpace + this.selectorFontSize;
+		let menuHeight = rows * rowHeight;
+
+		// Calculate top left position
+		let baseX = this.game.world.centerX - (menuWidth / 2) + space / 2;
+		let baseY = this.game.world.centerY - (rowHeight / 2) * 3;
+
+		let currentRow = 0;
 
 		for (let i = 0; i < this.items.length; i++) {
-			let posX = Math.floor(baseY + (this.imgWidth + space) * i);
+			if (i % itemsInRow == 0) {
+				currentRow++;
+
+				if (currentRow == rows) {
+					let leftMembers = this.items.length % itemsInRow;
+					menuWidth = leftMembers * (this.imgWidth + space) - space;
+					baseX = this.game.world.centerX - (menuWidth / 2) + space / 2;
+				}
+			}
+
+			let posX = Math.floor(baseX + (this.imgWidth + space) * (i % itemsInRow));
+			let posY = Math.floor(baseY + rowHeight * currentRow);
+
 			let shouldHighlight = (i == this.curSel && !Phaser.Device.touch);
 
-			this.items[i].obj = this.game.add.sprite(posX, this.game.world.centerY, "img_bird", i * 2, this);
+			this.items[i].obj = this.game.add.sprite(posX, posY, "img_bird", i * 2, this);
 			this.items[i].obj.scale.setTo(shouldHighlight ? this.sclHighlight : this.scl);
 			this.items[i].obj.anchor.set(0.5);
 			this.items[i].obj.animations.add("anim", [this.items[i].frame, this.items[i].frame + 1]);
@@ -55,7 +85,7 @@ export default class ColorSelectMenu extends Phaser.Group {
 
 		// Selector char
 		let y = Math.floor(this.items[this.curSel].obj.centerY + this.items[this.curSel].obj.height + this.selectorSpace);
-		this.selector = this.game.add.bitmapText(this.items[this.curSel].x, y, "fnt_flappy", "^", 36 + 18, this);
+		this.selector = this.game.add.bitmapText(this.items[this.curSel].x, y, "fnt_flappy", "^", this.selectorFontSize, this);
 		this.selector.anchor.setTo(0.5);
 		this.selector.visible = !Phaser.Device.touch;
 	}

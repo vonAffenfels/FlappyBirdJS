@@ -22,7 +22,9 @@ export class PlayState extends Phaser.State {
 		this.gameover = false;
 		this.score = 0;
 
-		this.input.onDown.add(this._onTap, this);
+		if (Phaser.Device.touch) {
+			this.input.onDown.add(this._onTap, this);
+		}
 
 		// Draw trees
 		this.trees = new TreeGroupObject(this.game, config.get("trees.gap"), config.get("trees.speed"), config.get("trees.distance"));

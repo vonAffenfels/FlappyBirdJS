@@ -11,8 +11,7 @@ export default class GameConfig {
 				enableDebug: false,
 				backgroundColor: '#89bfdc',
 				renderer: Phaser.CANVAS,
-				name: "FlappyBirdJS",
-				parent: "game"
+				name: "FlappyBirdJS"
 			},
 
 			fontSize: {

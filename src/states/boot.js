@@ -47,7 +47,6 @@ export class BootState extends Phaser.State {
 		// Lock orientation
 		if (!this.game.device.desktop) {
 			this.game.scale.forceOrientation(false, true);
-			this.game.scale.setResizeCallback(this.game.onResize, this.game);
 			this.game.scale.enterIncorrectOrientation.add(this.game.onEnterIncorrectOrientation, this.game);
 			this.game.scale.leaveIncorrectOrientation.add(this.game.onLeaveIncorrectOrientation, this.game);			
 		}

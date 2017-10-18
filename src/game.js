@@ -24,10 +24,6 @@ class Game extends Phaser.Game {
 		this.state.start(this.config.get("defaultState"));
 	}
 
-	onResize() {
-		
-	}
-
 	onEnterIncorrectOrientation() {
 		this.orientated = false;
 		document.getElementById('orientation').style.display = 'block';

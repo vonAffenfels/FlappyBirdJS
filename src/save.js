@@ -1,3 +1,5 @@
+import * as bluebird from "bluebird";
+
 export default class GameSave {
 	constructor(game) {
 		this.game = game;
@@ -32,8 +34,21 @@ export default class GameSave {
 		}
 	}
 
+	loadHighscore() {
+		if (!window.parent || window.parent == window) {
+			return Promise.resolve();
+		}
+
+		return this.game.api.getHighscore().then((highscore) => {
+			this._data.highscore = highscore;
+
+			return Promise.resolve();
+		});
+	}
+
 	_save() {
 		localStorage.setItem(this.game.config.get("game.name"), JSON.stringify(this._data));
+		this.game.api.saveHighscore(this._data.highscore);
 	}
 
 	get(key, def) {

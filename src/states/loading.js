@@ -26,6 +26,8 @@ export class LoadingState extends Phaser.State {
 		// set a blue color for the background of the stage
 		this.game.stage.backgroundColor = this.game.config.get("game.backgroundColor");
 
-		this.game.state.start(Enums.States.MENU);
+		this.game.save.loadHighscore().then(() => {
+			this.game.state.start(Enums.States.MENU);
+		});	
 	}
 }

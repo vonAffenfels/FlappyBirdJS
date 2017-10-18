@@ -1,11 +1,11 @@
 {
-	"title": "Flappy Ape",
-	"highscore": "Highscore: {{score}}",
-	"colorSelect": "Select Color",
-	"start": "Start",
-	"gameover": "Game Over",
-	"spaceToContinue": "Space to continue",
-	"tapToContinue": "Tap to continue",
-	"newHighscore": "New Highscore!",
-	"go": "Go!"
+	"title": "FLAPPY APE",
+	"highscore": "HIGHSCORE: {{score}}",
+	"colorSelect": "SELECT COLOR",
+	"start": "START",
+	"gameover": "GAME OVER",
+	"spaceToContinue": "SPACE TO CONTINUE",
+	"tapToContinue": "TAP TO CONTINUE",
+	"newHighscore": "NEW HIGHSCORE!",
+	"go": "GO!"
 }

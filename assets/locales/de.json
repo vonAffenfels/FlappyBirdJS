@@ -1,11 +1,11 @@
 {
-	"title": "Flappy Ape",
-	"highscore": "Highscore: {{score}}",
-	"colorSelect": "Farbwahl",
-	"start": "Start",
-	"gameover": "Game Over",
-	"spaceToContinue": "Leertaste zum Fortfahren",
-	"tapToContinue": "Tippen zum Fortfahren",
-	"newHighscore": "Neuer Highscore!",
-	"go": "Start!"
+	"title": "FLAPPY APE",
+	"highscore": "HIGHSCORE: {{score}}",
+	"colorSelect": "FARBWAHL",
+	"start": "START",
+	"gameover": "GAME OVER",
+	"spaceToContinue": "LEERTASTE ZUM FORTFAHREN",
+	"tapToContinue": "TIPPEN ZUM FORTFAHREN",
+	"newHighscore": "NEUER HIGHSCORE!",
+	"go": "START!"
 }

@@ -20,11 +20,11 @@ export default class ColorSelectMenu extends Phaser.Group {
 		}
 
 		this.scl = 1;
-		this.sclHighlight = 1.5;
+		this.sclHighlight = 1;
 		this.imgWidth 	= 36 * this.scl;
 		this.imgHeight 	= 36 * this.scl;
 		this.selectorFontSize = 54;
-		this.selectorSpace = 10;
+		this.selectorSpace = 20;
 	}
 
 	draw() {
@@ -47,17 +47,24 @@ export default class ColorSelectMenu extends Phaser.Group {
 		let menuHeight = rows * rowHeight;
 
 		// Calculate top left position
-		let baseX = this.game.world.centerX - (menuWidth / 2) + space / 2;
-		let baseY = this.game.world.centerY - (rowHeight / 2) * 3;
+		let baseX = Math.floor(this.game.world.centerX - (menuWidth / 2) + space / 2);
+		let baseY = Math.floor(this.game.world.centerY - (rowHeight / 2) * 3);
+
+		console.log(baseX);
 
 		let currentRow = 0;
+
+		console.log(rowHeight, menuHeight, rows, itemsInRow, menuWidth);
 
 		for (let i = 0; i < this.items.length; i++) {
 			if (i % itemsInRow == 0) {
 				currentRow++;
 
-				if (currentRow == rows) {
+				if (currentRow == rows && rows > 1) {
 					let leftMembers = this.items.length % itemsInRow;
+					if (leftMembers == 0) {
+						leftMembers = itemsInRow;
+					}
 					menuWidth = leftMembers * (this.imgWidth + space) - space;
 					baseX = this.game.world.centerX - (menuWidth / 2) + space / 2;
 				}
@@ -74,12 +81,12 @@ export default class ColorSelectMenu extends Phaser.Group {
 			this.items[i].obj.animations.add("anim", [this.items[i].frame, this.items[i].frame + 1]);
 			this.items[i].obj.animations.play("anim", 8, true);
 			this.items[i].obj.inputEnabled = true;
-			this.items[i].obj.events.onInputOver.add(function () {
-				this._setSelected(i);
-			}, this);
-			this.items[i].obj.events.onInputDown.add(function () {
-				this._setColor(i);
-			}, this);
+
+			if (Phaser.Device.touch) {
+				this.items[i].obj.events.onInputDown.add(function () {
+					this._setColor(i);
+				}, this);
+			}
 			this.items[i].x = posX;
 		}
 

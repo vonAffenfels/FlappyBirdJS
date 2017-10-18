@@ -14,6 +14,7 @@ class Game extends Phaser.Game {
 
 		this.config = config;
 		this.save = new GameSave(this);
+		this.orientated = true;
 
 		for (let stateName in Enums.States) {
 			let state = Enums.States[stateName]
@@ -21,6 +22,20 @@ class Game extends Phaser.Game {
 		}
 
 		this.state.start(this.config.get("defaultState"));
+	}
+
+	onResize() {
+		
+	}
+
+	onEnterIncorrectOrientation() {
+		this.orientated = false;
+		document.getElementById('orientation').style.display = 'block';
+	}
+
+	onLeaveIncorrectOrientation() {
+		this.orientated = false;
+		document.getElementById('orientation').style.display = 'none';
 	}
 }
 

@@ -172,7 +172,6 @@ module.exports = function (grunt) {
         'gh-pages'
     ]);
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-gh-pages');

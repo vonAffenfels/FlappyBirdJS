@@ -35,6 +35,17 @@ module.exports = function (grunt) {
                     ], 
                     include: path.join(__dirname, 'src') 
                 },
+		{
+		    test: /adventskalender-js-api/,
+		    use: [
+		        {
+			    loader: 'babel-loader',
+			    query: {
+				presets: ['env']
+			    }
+			}
+		    ]
+		},
                 { 
                     test: /pixi\.js/, 
                     use: ['expose-loader?PIXI'] 
@@ -106,13 +117,6 @@ module.exports = function (grunt) {
                             removeEmptyAttributes: true
                         },
                         hash: true
-                    }),
-                    new BrowserSyncPlugin({
-                        host: process.env.IP || 'localhost',
-                        port: process.env.PORT || 8080,
-                        server: {
-                            baseDir: ['./', './_build']
-                        }
                     })
                 ]
             }, webpackConfig),

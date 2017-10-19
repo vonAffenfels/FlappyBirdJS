@@ -12,7 +12,7 @@ export default class GameConfig {
 				width: "100%",
 				height: "100%",
 				enableDebug: false,
-				backgroundColor: '#FFFFFF',
+				backgroundColor: '#000000',
 				renderer: Phaser.CANVAS,
 				name: "FlappyBirdJS"
 			},

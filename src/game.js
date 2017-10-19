@@ -1,6 +1,7 @@
 import 'pixi';
 import 'p2';
 import Phaser from 'phaser';
+import Api from "adventskalender-js-api";
 
 import Enums from './enums';
 import GameSave from './save';
@@ -13,6 +14,10 @@ class Game extends Phaser.Game {
 		super(config.get("game"));
 
 		this.config = config;
+
+		this.api = new Api();
+		this.api.init(window, this.config.get("game.name"));
+		
 		this.save = new GameSave(this);
 		this.orientated = true;
 

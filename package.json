@@ -24,6 +24,7 @@
   "private": true,
   "devDependencies": {
     "@orange-games/phaser-i18next": "^1.0.3",
+    "adventskalender-js-api": "git+https://github.ape/vonAffenfels/adventskalender-js-api.git",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
@@ -41,5 +42,7 @@
     "script-loader": "^0.7.2",
     "webpack": "^3.8.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bluebird": "^3.5.1"
+  }
 }

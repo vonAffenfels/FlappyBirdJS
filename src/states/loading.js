@@ -19,6 +19,9 @@ export class LoadingState extends Phaser.State {
 
 		this.load.bitmapFont("fnt_flappy", 'assets/fonts/fnt_flappy.png', 'assets/fonts/fnt_flappy.fnt');
 
+		this.load.audio("snd_background", ["assets/sounds/background.mp3"]);
+		this.load.audio("snd_pew", ["assets/sounds/pew.mp3"]);
+
 		this.load.locale(['en', 'de'], ['translation']);
 	}
 
@@ -28,6 +31,6 @@ export class LoadingState extends Phaser.State {
 
 		this.game.save.loadHighscore().then(() => {
 			this.game.state.start(Enums.States.MENU);
-		});	
+		});
 	}
 }

@@ -20,6 +20,14 @@ export class MenuState extends Phaser.State {
 		let centerX = this.game.world.centerX;
 		let config 	= this.game.config;
 
+		// Play background music
+		if (!this.game.backgroundAudio) {
+			this.game.backgroundAudio = this.game.add.audio("snd_background", 1, true);
+		}
+		if (!this.game.backgroundAudio.isPlaying) {
+			this.game.backgroundAudio.play();
+		}
+
 		// Draw trees
 		this.trees = new TreeGroupObject(this.game, config.get("trees.gap"), config.get("trees.speed"), config.get("trees.distance"));
 		this.trees.start();

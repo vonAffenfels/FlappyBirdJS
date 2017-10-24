@@ -4,6 +4,11 @@ export default class TreeObject extends Phaser.Group {
 	constructor(game, parent, index, gap, speed) {
 		super(game, parent);
 
+		this.datapusValues = [
+			"Google", "Facebook", "YouTube", "Microsoft", "Apple", "Instagram", "Blogspot", "IMDB", "Amazon", "Dropbox", "bing", "Diply", "NewYork Times", "Yahoo", "LinkedIn", "Xing", "Twitter", 
+			"Pinterest", "Tumblr", "Walmart", "Ebay", "craigslist", "Paypal", "Netflix", "Spotify", "PornHub", "wikipedia", "reddit", "ESPN", "CNN"
+		]
+
 		this.index = index;
 		this.speed = speed;
 
@@ -13,16 +18,22 @@ export default class TreeObject extends Phaser.Group {
 		this.bottomTree = new Phaser.Sprite(this.game, 0, 0, "img_tree", 1);
 		this.bottomTree.scale.setTo(0.75);
 
+		this.datapusText = new Phaser.BitmapText(this.game, this.bottomTree.x + 10, this.game.world.height - 50, "fnt_flappy", "", 24);
+
 		this.game.physics.arcade.enableBody(this.topTree);
 		this.game.physics.arcade.enableBody(this.bottomTree);
+		this.game.physics.arcade.enableBody(this.datapusText);
 		
 		this.topTree.body.allowGravity = false;
 		this.topTree.body.immovable = true;
 		this.bottomTree.body.allowGravity = false;
 		this.bottomTree.body.immovable = true;
+		this.datapusText.body.allowGravity = false;
+		this.datapusText.body.immovable = true;
 		
 		this.add(this.topTree);
 		this.add(this.bottomTree);
+		this.add(this.datapusText);
 
 		this.gap = Math.min(this.game.world.height - 320, gap);
 
@@ -38,6 +49,11 @@ export default class TreeObject extends Phaser.Group {
 
 		this.x = x;
 		this.y = this.game.rnd.integerInRange(this.topMin, this.topMax);
+
+		// Datenkrake
+		let datapus = this.game.rnd.pick(this.datapusValues);
+		this.datapusText.text = datapus;
+		this.datapusText.reset(this.bottomTree.width + 20, this.height - 270 - this.y);
 
 		if (this.running) {
 			this.setAll("body.velocity.x", this.speed);

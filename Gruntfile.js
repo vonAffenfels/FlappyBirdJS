@@ -35,17 +35,17 @@ module.exports = function (grunt) {
                     ], 
                     include: path.join(__dirname, 'src') 
                 },
-		{
-		    test: /adventskalender-js-api/,
-		    use: [
-		        {
-			    loader: 'babel-loader',
-			    query: {
-				presets: ['env']
-			    }
-			}
-		    ]
-		},
+        		{
+        		    test: /adventskalender-js-api/,
+        		    use: [
+        		        {
+        			    loader: 'babel-loader',
+        			    query: {
+        				presets: ['env']
+        			    }
+        			}
+        		    ]
+        		},
                 { 
                     test: /pixi\.js/, 
                     use: ['expose-loader?PIXI'] 

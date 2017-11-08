@@ -5,8 +5,8 @@ export default class TreeObject extends Phaser.Group {
 		super(game, parent);
 
 		this.datapusValues = [
-			"Google", "Facebook", "YouTube", "Microsoft", "Apple", "Instagram", "Blogspot", "IMDB", "Amazon", "Dropbox", "bing", "Diply", "NewYork Times", "Yahoo", "LinkedIn", "Xing", "Twitter", 
-			"Pinterest", "Tumblr", "Walmart", "Ebay", "craigslist", "Paypal", "Netflix", "Spotify", "PornHub", "wikipedia", "reddit", "ESPN", "CNN"
+			"GOOGLE", "FACEBOOK", "YOUTUBE", "MICROSOFT", "APPLE", "INSTAGRAM", "BLOGSPOT", "IMDB", "AMAZON", "DROPBOX", "BING", "DIPLY", "NEWYORK TIMES", "YAHOO", "LINKEDIN", "XING", "TWITTER", 
+			"PINTEREST", "TUMBLR", "WALMART", "EBAY", "CRAIGSLIST", "PAYPAL", "NETFLIX", "SPOTIFY", "PORNHUB", "WIKIPEDIA", "REDDIT", "ESPN", "CNN"
 		]
 
 		this.index = index;

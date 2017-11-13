@@ -51,6 +51,7 @@ export default class MainMenu extends Phaser.Group {
 			this.items[i].obj = this.game.add.translatedBitmapText(this.game.world.centerX, posY, "fnt_flappy", this.items[i].text, shouldHighlight ? this.fontSizeHighlight : this.fontSize, null, null, this);
 			this.items[i].obj.anchor.setTo(0.5, 0);
 			this.items[i].obj.inputEnabled = true;
+			this.items[i].obj.hitArea = Phaser.Rectangle.inflate(Phaser.Rectangle.clone(this.items[i].obj.getLocalBounds()), 10, 10);
 
 			if (Phaser.Device.touch) {
 				this.items[i].obj.events.onInputDown.add(function () {

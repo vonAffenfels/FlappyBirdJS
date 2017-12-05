@@ -13,6 +13,7 @@ export default class BirdObject extends Phaser.Sprite {
 		this.frame = this.baseFrame;
 
 		this.pewAudio = this.game.add.audio("snd_pew");
+		this.isFlapping = false;
 	}
 
 	start() {
@@ -29,8 +30,14 @@ export default class BirdObject extends Phaser.Sprite {
 	}
 
 	flap() {
+		if (this.isFlapping) {
+			return;
+		}
+
+		this.isFlapping = true;
 		this.body.velocity.y = this.game.config.get("physics.flapForce");
 		this.pewAudio.play();
+		this.isFlapping = false;
 	}
 
 	update() {
